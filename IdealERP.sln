@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{6337FCBE-B430-45AB-A55F-C5BA3C2330A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{6ADBF4F4-4FAC-4F99-86AB-132E6547E529}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiTest", "WebApiTest\WebApiTest.csproj", "{ADF9FAA3-9807-4FCD-ADF9-7C7057492012}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6337FCBE-B430-45AB-A55F-C5BA3C2330A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6337FCBE-B430-45AB-A55F-C5BA3C2330A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6337FCBE-B430-45AB-A55F-C5BA3C2330A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6337FCBE-B430-45AB-A55F-C5BA3C2330A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ADBF4F4-4FAC-4F99-86AB-132E6547E529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ADBF4F4-4FAC-4F99-86AB-132E6547E529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ADBF4F4-4FAC-4F99-86AB-132E6547E529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ADBF4F4-4FAC-4F99-86AB-132E6547E529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADF9FAA3-9807-4FCD-ADF9-7C7057492012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADF9FAA3-9807-4FCD-ADF9-7C7057492012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADF9FAA3-9807-4FCD-ADF9-7C7057492012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADF9FAA3-9807-4FCD-ADF9-7C7057492012}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67AF2BFF-141D-46DC-8CA4-48B5D34F376D}
+	EndGlobalSection
+EndGlobal
