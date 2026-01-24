@@ -18,6 +18,8 @@ namespace WebAPI.Data
         }
 
         public virtual DbSet<TblAuditLog> TblAuditLogs { get; set; }
+        public virtual DbSet<TblCountry> TblCountries { get; set; }
+        public virtual DbSet<TblCurrency> TblCurrencies { get; set; }
         public virtual DbSet<TblOrganisation> TblOrganisations { get; set; }
         public virtual DbSet<TblPermission> TblPermissions { get; set; }
         public virtual DbSet<TblPlan> TblPlans { get; set; }
@@ -32,7 +34,7 @@ namespace WebAPI.Data
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("****");
+//                optionsBuilder.UseSqlServer("****");
             }
         }
 
@@ -85,6 +87,55 @@ namespace WebAPI.Data
                     .HasForeignKey(d => d.OrganizationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tblAudit_Log_tblOrganisation");
+            });
+
+            modelBuilder.Entity<TblCountry>(entity =>
+            {
+                entity.ToTable("tblCountry");
+
+                entity.HasIndex(e => e.CountryCode, "IX_tblCountry")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CountryCode)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("country_code")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.CountryName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("country_name");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("(getdate())");
+            });
+
+            modelBuilder.Entity<TblCurrency>(entity =>
+            {
+                entity.HasKey(e => e.Code);
+
+                entity.ToTable("tblCurrency");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("code")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
             });
 
             modelBuilder.Entity<TblOrganisation>(entity =>

@@ -36,8 +36,13 @@ namespace WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
             services.AddDbContext<IdealERPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdealERPConnection")));
+
             services.AddScoped<IUser, Usersvr>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IMasterData, MasterData>();
+
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
