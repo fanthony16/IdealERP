@@ -35,7 +35,7 @@ namespace WebApp.ViewModels
             [DataType(DataType.Password)]
 
             //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+=\-])[A-Za-z\d@$!%*?&#^()_+=\-]{8,}$", ErrorMessage = "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.")]
-
+            [RegularExpression(@"^(?=(?:.*[A-Z]){2,})(?=(?:.*[^a-zA-Z0-9]){2,}).+$", ErrorMessage = "Password must contain at least 2 uppercase letters and 2 special characters.")]
             public string Password { get; set; }
 
             [Required(ErrorMessage = "Password is Required")]

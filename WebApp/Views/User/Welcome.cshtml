@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Http;
+@using System.Text;
+
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@{
+
+    byte[] bytes;
+    bool isActive = Context.Session.TryGetValue("user", out bytes);
+
+}
+
+<div class="container text-center">
+
+    <div class="row">
+
+
+        <div class="col"></div>
+
+        <div class="col-8">
+
+
+            <div class="col-lg-auto mb-lg-5">
+
+
+                @if (Context.Session.TryGetValue("user", out bytes))
+                {
+                <h1>Welcome, @Encoding.ASCII.GetString(bytes) 👋</h1>
+                }
+                else
+                {
+                <h1>Welcome !!! 👋</h1>
+                }
+
+
+                <p>Your account has been created successfully.</p>
+                <hr />
+                <p>
+                    To continue, create a new organisation or join an existing one using an invitation.
+                </p>
+
+                <div class="actions">
+                    <a asp-controller="Organisation" asp-action="Register" class="btn btn-primary btn-user btn-block">
+                        Create a new organisation
+                    </a>
+                    <p></p>
+                    <a href="/organisation/join" class="secondary-btn">
+                        Join an organisation with an invite
+                    </a>
+                </div>
+                <hr />
+
+                @*<div class="footer">
+            You’re one step away from accessing your dashboard.<br />
+            Need help? <a href="/help">View setup guide</a>
+        </div>*@
+
+                <div>
+                    You’re one step away from accessing your dashboard.<br />
+                    Need help? <a href="/help">View setup guide</a>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="col"></div>
+    </div>
+</div>
+

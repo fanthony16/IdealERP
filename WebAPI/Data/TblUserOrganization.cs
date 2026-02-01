@@ -15,7 +15,7 @@ namespace WebAPI.Data
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public Guid OrganizationId { get; set; }
-        public Guid RoleId { get; set; }
+        public Guid? RoleId { get; set; }
         public int Status { get; set; }
         public DateTime JoinedAt { get; set; }
 

@@ -35,7 +35,7 @@ namespace WebAPI.Data
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
 //                optionsBuilder.UseSqlServer("****");
-            }
+           }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -99,6 +99,7 @@ namespace WebAPI.Data
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.CountryCode)
+                    .IsRequired()
                     .HasMaxLength(2)
                     .IsUnicode(false)
                     .HasColumnName("country_code")
@@ -146,6 +147,14 @@ namespace WebAPI.Data
                     .HasColumnName("id")
                     .HasDefaultValueSql("(newsequentialid())");
 
+                entity.Property(e => e.AcceptTerms).HasColumnName("accept_terms");
+
+                entity.Property(e => e.BusinessEmail)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("business_email");
+
                 entity.Property(e => e.CompanySize).HasColumnName("company_size");
 
                 entity.Property(e => e.Country)
@@ -157,7 +166,8 @@ namespace WebAPI.Data
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("created_at");
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Currency)
                     .IsRequired()
@@ -184,16 +194,27 @@ namespace WebAPI.Data
                     .HasComment("3= trial, 2= suspended, 1= active");
 
                 entity.Property(e => e.Timezone)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("timezone");
 
                 entity.Property(e => e.TradeName)
-                    .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("trade_name");
+
+                entity.HasOne(d => d.CountryNavigation)
+                    .WithMany(p => p.TblOrganisations)
+                    .HasPrincipalKey(p => p.CountryCode)
+                    .HasForeignKey(d => d.Country)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblOrganisations_tblCountry");
+
+                entity.HasOne(d => d.CurrencyNavigation)
+                    .WithMany(p => p.TblOrganisations)
+                    .HasForeignKey(d => d.Currency)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblOrganisations_tblCurrency");
             });
 
             modelBuilder.Entity<TblPermission>(entity =>
@@ -388,7 +409,8 @@ namespace WebAPI.Data
 
                 entity.Property(e => e.JoinedAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("joined_at");
+                    .HasColumnName("joined_at")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.OrganizationId).HasColumnName("organization_id");
 
@@ -410,7 +432,6 @@ namespace WebAPI.Data
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.TblUserOrganizations)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tblUser_Organization_tblRoles");
 
                 entity.HasOne(d => d.User)

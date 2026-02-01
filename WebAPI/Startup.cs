@@ -30,14 +30,23 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                 .AddJsonOptions(options =>
+                 {
+                     options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                 }); 
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
+
+
             services.AddDbContext<IdealERPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdealERPConnection")));
 
             services.AddScoped<IUser, Usersvr>();
+            services.AddScoped<IOrganisationsvr, Organisationsvr>();
+            
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IMasterData, MasterData>();
 

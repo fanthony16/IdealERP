@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Data.Services;
 using WebApp.Utilities;
+using WebApp.WebManager;
 
 namespace WebApp
 {
@@ -26,8 +27,18 @@ namespace WebApp
         {
             services.AddControllersWithViews();
             services.AddScoped<APIGateway>();
+            services.AddScoped<ISessionManager, SessionManager>();
             services.AddScoped<IAccountsvr, Accountsvr>();
-            
+            services.AddScoped<IMasterData, MasterData>();
+            services.AddScoped<IOrganisationsvr, Organisationsvr>();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            services.AddHttpContextAccessor();
+
 
         }
 
@@ -45,6 +56,8 @@ namespace WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

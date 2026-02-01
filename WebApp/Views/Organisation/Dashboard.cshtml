@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Page Heading -->
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs mb-0 font-weight-bold text-primary text-uppercase mb-1 text-muted" style="color:black">
+                                Plan Type
+                            </div>
+
+                            <div class="h6 text-black-50 font-weight-bolder fo text-uppercase mb-1 text-capitalize text-dark fw-bold">
+                                Enterprise Plan
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs">50 Seats</div>
+
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+
+                            <div class="text-xs mb-0 font-weight-bold text-primary text-uppercase mb-1 text-muted">
+                                Billing Cycle
+                            </div>
+
+                            <div class="h6 font-weight-bold text-success text-uppercase mb-1">
+                                Annual
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs">17</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+
+
+                            <div class="text-xs mb-0 font-weight-bold text-primary text-uppercase mb-1 text-muted">
+                                Usage
+                            </div>
+
+                            <div class="h6 font-weight-bold text-info text-uppercase mb-1">
+                                Active User
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800 text-xs">2/50</div>
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar"
+                                             style="width: 20%" aria-valuenow="20" aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+
+                        <div class="col mr-2">
+
+                            <div class="text-xs mb-0 font-weight-bold text-primary text-uppercase mb-1 text-muted">
+                                Next Payment
+                            </div>
+
+                            <div class="h6 font-weight-bold text-warning text-uppercase mb-1">
+                                $700.00
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs">Due: Mar 15 2026</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Subscription Details</h6>
+                </div>
+                <div class="card-body">
+
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs pb-2">50 Seats</div>
+                    <div>
+
+                        <div class="h6 text-black-50 font-weight-bolder fo text-uppercase mb-1 text-capitalize text-dark fw-bold">
+                            Enterprise Plan <span class="text-muted text-xs">50 Users, Addvance Features</span>
+                        </div>
+
+                    </div>
+                    <hr />
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Upgrade Plan</a>
+
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Auto Renewal</label>
+                        </div>
+
+                    </div>
+                    <hr class="pb-sm-0" />
+
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs pb-2"><a href="#">View Invoices</a></div>
+                    <hr class="pb-0" />
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs pb-2"><a href="#">Upgrade Plan</a></div>
+                    
+
+
+                </div>
+                </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Billing Information</h6>
+                </div>
+                <div class="card-body">
+
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs">50 Seats</div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">User Management</h6>
+                </div>
+                <div class="card-body">
+
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs">50 Seats</div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Payment History</h6>
+                </div>
+                <div class="card-body">
+
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 text-xs">50 Seats</div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+

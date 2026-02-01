@@ -9,11 +9,11 @@ namespace WebApp.Data.Services
 {
     public interface IAccountsvr
     {
-        public Task<bool> ValidateAccount(ValidateUser _loginaccount);
+        public Task<User.ValidUser> ValidateAccount(User.ValidateUser _loginaccount);
 
-        public Task<bool> RegisterAccount(Register _newaccount);
+        public Task<User.ValidUser> RegisterAccount(Register _newaccount);
 
-        public Task<bool> UpdateAccount(Register _editaccount);
+        public Task<User.ValidUser> UpdateAccount(Register _editaccount);
 
     }
 }

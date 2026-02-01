@@ -1,0 +1,11 @@
+﻿@model WebApp.Views.Shared.EditorTemplate.StringModel
+@{
+    var isRequired = ViewData.ModelMetadata.IsRequired;
+}
+
+<label asp-for="@ViewData.ModelMetadata.PropertyName"
+       class="form-label @(isRequired ? "required" : "")">
+</label>
+
+<input asp-for="@ViewData.ModelMetadata.PropertyName"
+       class="form-control" />

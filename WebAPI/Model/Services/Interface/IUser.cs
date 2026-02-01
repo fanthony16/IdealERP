@@ -10,15 +10,19 @@ namespace WebAPI.Model.Services
     {
         Task<UserList> CreateUserAsync(RegisterUser dto);
 
-        Task<List<UserList>> GetAllUsersAsync();
+        //A= All Users
+        //U= UnAssigned Users
+        Task<List<UserList>> GetAllUsersAsync(char userCategory);
+
+
 
         Task<UserList> GetAllUserByIdAsync(Guid id);
 
         Task<bool> UpdateUser(Guid id, UpdateUser dto);
 
-        Task<bool> RegisterUserAsyn(RegisterUser dto);
+        Task<UserList> RegisterUserAsyn(RegisterUser dto);
 
-        Task<bool> ValidateUserAsyn(ValidateUser dto);
+        Task<UserList> ValidateUserAsyn(ValidateUser dto);
 
     }
 }

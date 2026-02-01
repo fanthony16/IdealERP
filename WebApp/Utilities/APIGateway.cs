@@ -18,7 +18,7 @@ namespace WebApp.Utilities
         {
             this.config = config;
         }
-        public async Task<bool> ApiPostAsync<T>(T obj, string actionPath)
+        public async Task<string> ApiPostAsync<T>(T obj, string actionPath)
 
         {
             
@@ -31,14 +31,14 @@ namespace WebApp.Utilities
             {
                 var json = await response.Content.ReadAsStringAsync();
                 //Console.WriteLine($"Created Product: {json}");
-                return true;
+                return json;
             }
             else
             {
                 //Console.WriteLine($"Failed to create user. Status: {response.StatusCode}");
                 var error = await response.Content.ReadAsStringAsync();
 
-                return false;
+                return error;
                 //Console.WriteLine($"Error details: {error}");
             }
         }

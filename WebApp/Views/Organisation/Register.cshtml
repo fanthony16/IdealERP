@@ -1,0 +1,135 @@
+﻿@model WebApp.ViewModels.View_Organisation.Create_Organisation
+@using WebApp.Models.Enums
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        
+        <div class="card shadow-lg p-4">
+
+            <div class="d-flex justify-content-center">
+                <img src="~/img/organisaion.png" class="img-fluid" alt="...">
+            </div>
+
+
+            
+            <h3 class="mb-2 text-center text-xl-center text-dark">Create your organisation</h3>
+
+            <p class="text-muted text-center text-xs">
+                This will be your workspace in the platform
+            </p>
+
+            <hr />
+
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group row">
+
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        @*<span class="required">Organisation Name</span>*@
+                        <label asp-for="Legal_name" class="control-label required"></label>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <input id="txtlegalname" asp-for="Legal_name" type="text" class="form-control form-control-user">
+                    <span asp-validation-for="Legal_name" class="text-danger"></span>
+
+                </div>
+
+
+                <div class="form-group row">
+
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        @*<span class="required">Business Email</span>*@
+                        <label asp-for="Business_email" class="control-label required"></label>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <input id="txtBusinessEmail" asp-for="Business_email" type="text" class="form-control form-control-user">
+                    <span asp-validation-for="Business_email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        @*<span class="required">Industry</span>*@
+                        <label asp-for="Industry" class="control-label required"></label>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <input id="txtIndustry" asp-for="Industry" type="text" class="form-control form-control-user">
+                    <span asp-validation-for="Industry" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        @*<span class="required">Country</span>*@
+                        <label asp-for="Country" class="control-label required"></label>
+                    </div>
+
+                    <div class="col-sm-6">
+                        @*<span class="required">Currencies</span>*@
+                        <label asp-for="Currency" class="control-label required"></label>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+
+                        <select id="txtCountry" class="form-control form-control-user" asp-for="Country" asp-items="Model.Countries">
+                            <option></option>
+                        </select>
+                        <span asp-validation-for="Country" class="text-danger"></span>
+
+                    </div>
+                    <div class="col-sm-6">
+
+                        <select id="txtCurrency" class="form-control form-control-user" asp-for="Currency" asp-items="Model.Currencies">
+                            <option></option>
+                        </select>
+                        <span asp-validation-for="Currency" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-check mb-3">
+                    <input asp-for="AcceptTerms" class="form-check-input" />
+                    <label class="form-check-label">
+                        I agree to the terms and conditions
+                    </label>
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button id="btnAddNewReg" type="submit" class="btn btn-primary w-100">Create Organisation</button>
+
+                    @*<input type="submit" value="Register Account" class="btn btn-facebook btn-user btn-block" />*@
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

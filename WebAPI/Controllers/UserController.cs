@@ -32,13 +32,14 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var created = await userService.RegisterUserAsyn(dto);
-            if (!created)
+            var createdUser = await userService.RegisterUserAsyn(dto);
+            if (createdUser is null)
             {
                 return NotFound(new { message = $"User Registration Failed" });
             }
 
-            return Ok("User Registration Succesful");
+            return Ok(createdUser);
+
         }
 
         [HttpPost("ValidateUser")]
@@ -50,20 +51,20 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var isValidUser = await userService.ValidateUserAsyn(dto);
-            if (!isValidUser)
+            var ValidatedUser = await userService.ValidateUserAsyn(dto);
+            if (ValidatedUser is null)
             {
                 return NotFound(new { message = $"Invalid Username or Password" });
             }
 
-            return Ok("Account Validated Succesful");
+            return Ok(ValidatedUser);
         }
 
 
         [HttpGet("GetAllUser")]
-        public async Task<ActionResult<List<UserList>>> GetAllUser() 
+        public async Task<ActionResult<List<UserList>>> GetAllUser([FromQuery] char AccountType) 
         {
-            var _users = await userService.GetAllUsersAsync();
+            var _users = await userService.GetAllUsersAsync(AccountType);
             return Ok(_users);
         }
 

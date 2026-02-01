@@ -43,11 +43,28 @@ namespace WebAPI.Model.Services
             throw new NotImplementedException();
         }
 
-        public async Task<List<User.UserList>> GetAllUsersAsync()
+        public async Task<List<User.UserList>> GetAllUsersAsync(char userCategory)
         {
+            
+            if (userCategory.Equals("U"))
+            {
 
-            var users =  await dbContext.TblUsers.ToListAsync();
-            return users.Select(MapToUser).ToList();
+                var users = dbContext.TblUsers.Where(a => !dbContext.TblUserOrganizations.Any(b => b.UserId == a.Id));
+                return users.Select(MapToUser).ToList();
+
+            }
+            else
+            {
+
+                var users = await dbContext.TblUsers.ToListAsync();
+                return users.Select(MapToUser).ToList();
+                
+            }
+
+
+
+
+            //var result = dbContext.TblUsers.Where(a => !dbContext.TblUserOrganizations.Any(b => b.UserId == a.Id));
 
         }
 
@@ -68,7 +85,7 @@ namespace WebAPI.Model.Services
 
         }
 
-        public async Task<bool> RegisterUserAsyn(RegisterUser dto)
+        public async Task<UserList> RegisterUserAsyn(RegisterUser dto)
         {
             
             TblUser nUser = new() { 
@@ -82,12 +99,12 @@ namespace WebAPI.Model.Services
             
             await dbContext.TblUsers.AddAsync(nUser);
             await dbContext.SaveChangesAsync();
-
-            return true;
+            
+            return MapToUser(nUser); 
             
         }
 
-        public async Task<bool> ValidateUserAsyn(ValidateUser dto)
+        public async Task<UserList> ValidateUserAsyn(ValidateUser dto)
         {
             var _user = await dbContext.TblUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
 
@@ -96,11 +113,14 @@ namespace WebAPI.Model.Services
 
                 if (pwdHelper.VerifyPassword(_user.PasswordHash, dto.Password))
                 {
-                    return true;
+                    //return true;
+
+                  return  MapToUser(_user);
+
                 }
 
             }
-            return false;
+            return null;
             
         }
     }
