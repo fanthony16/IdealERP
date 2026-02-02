@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Data;
 using static WebAPI.Model.DTO.Organisation;
+using static WebAPI.Model.DTO.User;
 
 namespace WebAPI.Model.Services
 {
@@ -56,6 +57,34 @@ namespace WebAPI.Model.Services
            return dbOrganisations.Select(MapToOrg).ToList();
            
 
+        }
+
+        public async Task<AssignOganisationOwnerUser> CreateTenantOwnerAsyn(AssignOganisationOwnerUser dto)
+        {
+            var adminRoleID = await dbContext.TblRoles.Where(x => x.Name == "Admin").FirstOrDefaultAsync();
+            if (adminRoleID != null)
+            {
+                var tanentOwner = new TblUserOrganization
+                {
+                    RoleId = adminRoleID.Id,
+                    OrganizationId = dto.OrganisationID,
+                    UserId = dto.UserID,
+                    Status = 1,
+                    JoinedAt = DateTime.Now
+                };
+
+                await dbContext.TblUserOrganizations.AddAsync(tanentOwner);
+                await dbContext.SaveChangesAsync();
+
+                var organisationOwner = new AssignOganisationOwnerUser
+                {
+                    UserID = tanentOwner.UserId,
+                    OrganisationID = tanentOwner.OrganizationId
+                };
+
+                return organisationOwner;
+            }
+            return null;
         }
 
         public Task<bool> UpdateOrganisationAsync(UpdateOrganisation dto)

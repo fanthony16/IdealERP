@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAPI.Data;
 using WebAPI.Model.Services;
 using static WebAPI.Model.DTO.Organisation;
+using static WebAPI.Model.DTO.User;
 
 namespace WebAPI.Controllers
 {
@@ -16,6 +17,7 @@ namespace WebAPI.Controllers
     {
         
         private readonly IOrganisationsvr registrationService;
+
         public RegistrationController(IOrganisationsvr registrationService)
         {
             
@@ -44,6 +46,26 @@ namespace WebAPI.Controllers
         {
             var _users = await registrationService.GetAllOrganisationAsync();
             return Ok(_users);
+        }
+
+        [HttpPost("CreateTanentOwner")]
+        public async Task<IActionResult> AssignTenantOwner([FromBody] AssignOganisationOwnerUser dto)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var createdTanentOwner = await registrationService.CreateTenantOwnerAsyn(dto);
+            if (createdTanentOwner != null)
+            {
+                return Ok(createdTanentOwner);
+
+            }
+            return NotFound(new { message = $"Tenant Owner Creation Failed" });
+
+
         }
 
     }

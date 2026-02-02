@@ -40,7 +40,13 @@ namespace WebApp.Models.Dto
             public bool AcceptTerms { get; set; }
         }
 
-       
+        public class AssignOganisationOwnerUser
+        {
+
+            public Guid OrganisationID { get; set; }
+            
+            public Guid UserID { get; set; }
+        }
 
     }
 }

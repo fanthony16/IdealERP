@@ -67,14 +67,25 @@ namespace WebApp.Controllers
             
                 if (ModelState.IsValid)
                 {
-                    
-                    if (await _accountsvr.RegisterAccount(nwAccount) is not null) 
-                    {
-                        //SessionManager sm = new(HttpContext);
 
-                        _sessionManager.SaveSessionObject(nwAccount.First_name + " " + nwAccount.Last_name, "user");
-                        _sessionManager.SaveSessionObject("", "page_title");
+                    var registeredUser = await _accountsvr.RegisterAccount(nwAccount);
+                    if (registeredUser != null)
+                    {
+
+                        var sessionValues = new Dictionary<string, string>
+                        {
+                            ["user"] = $"{nwAccount.First_name} {nwAccount.Last_name}",
+                            ["page_title"] = string.Empty,
+                            ["userid"] = registeredUser.UserID.ToString()
+                        };
+
+                        foreach (var item in sessionValues)
+                        {
+                            _sessionManager.SaveSessionObject(item.Value, item.Key);
+                        }
+
                         return RedirectToAction("Welcome");
+
                     }
                 }
 

@@ -9,6 +9,7 @@ using WebApp.ViewModels;
 using WebApp.Models.Dto;
 using static WebApp.Models.Dto.MasterData;
 using WebApp.WebManager;
+using static WebApp.Models.Dto.Organisation;
 
 namespace WebApp.Controllers
 {
@@ -17,12 +18,14 @@ namespace WebApp.Controllers
         private readonly IMasterData masterdata;
         private readonly IOrganisationsvr org_registration;
         private readonly ISessionManager _sessionManager;
-        
-        public OrganisationController(IMasterData masterdata, IOrganisationsvr org_registration, ISessionManager _sessionManager)
+        private readonly IAccountsvr _accountsvr;
+
+        public OrganisationController(IMasterData masterdata, IOrganisationsvr org_registration, ISessionManager _sessionManager, IAccountsvr _accountsvr)
         {
             this.masterdata = masterdata;
             this.org_registration = org_registration;
             this._sessionManager = _sessionManager;
+            this._accountsvr = _accountsvr;
         }
 
 
@@ -46,29 +49,16 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Index()
         {
 
-            List<Country> countries = await masterdata.GetAllCountry();
-            List<Currency> currencies = await masterdata.GetAllCurrency();
             var dblstOrgs = await org_registration.GetOrganisationsAsyn();
             var dblstUnassignedOrgAccounts = await org_registration.GetUnAssignedAccountsAsyn();
 
-
-            var SelectlstCountry = countries.ToList().ConvertAll(x => new SelectListItem { 
-                Text = x.Name,
-                Value = x.Code
-            });
-
-            var SelectlstCurrency = currencies.ToList().ConvertAll(x => new SelectListItem
-            {
-                Text = x.Code + " - " + x.Description,
-                Value = x.Code
-            });
-
+            var SelectListData = await getSelectedListItemDataAsync();
             var lstOrgs = dblstOrgs.Select(MapToView).ToList();
             var vworg = new View_Organisation.OrganisationObj()
             {
                 Orgs = lstOrgs,
-                Countries = SelectlstCountry,
-                Currencies = SelectlstCurrency,
+                Countries = SelectListData[0],
+                Currencies = SelectListData[1],
                 AllUnAssignedAccounts = dblstUnassignedOrgAccounts
             };
             
@@ -134,14 +124,35 @@ namespace WebApp.Controllers
                     
                     return View(vworg);
                 }
-              
+
+                    _sessionManager.SaveSessionObject(createdOrganisation.Id.ToString(), "tenantid");
 
             }
 
-           
+            await AssignOrganisationOwner();
 
             return RedirectToAction("Dashboard");
 
+        }
+
+        private async Task<bool> AssignOrganisationOwner()
+        {
+            
+            var orgOwner = new AssignOganisationOwnerUser
+            {
+
+                OrganisationID = Guid.Parse(_sessionManager.GetSessionObject("tenantid")),
+                UserID = Guid.Parse(_sessionManager.GetSessionObject("userid"))
+            
+            };
+
+          var assignedUser =  await org_registration.AssignOrganisationOwnerAsyn(orgOwner);
+
+            if (assignedUser != null)
+            {
+                return true;
+            }
+            return false;
         }
 
         private async Task<List<List<SelectListItem>>> getSelectedListItemDataAsync()

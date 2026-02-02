@@ -72,6 +72,7 @@ namespace WebAPI.Model.DTO
 
             [Required]
             [DataType(DataType.EmailAddress, ErrorMessage = "Provide Valid Email Address")]
+            
             public string ComfirmEmail { get; set; }
 
             [Required]
@@ -93,7 +94,13 @@ namespace WebAPI.Model.DTO
 
         }
 
-
+        public class AssignOganisationOwnerUser
+        {
+            [Required]
+            public  Guid OrganisationID { get; set; }
+            [Required]
+            public  Guid UserID { get; set; }
+        }
 
     }
 }

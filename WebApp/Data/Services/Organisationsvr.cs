@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebApp.Models.Dto;
 using WebApp.Utilities;
 using WebApp.ViewModels;
+using static WebApp.Models.Dto.Organisation;
 
 namespace WebApp.Data.Services
 {
@@ -44,13 +45,22 @@ namespace WebApp.Data.Services
 
             return JsonSerializer.Deserialize<Organisation.Organisations>(createdOrganisation);
 
-            //return await _apigateway.ApiPostAsync<Organisation.CreateOrganisation>(dto, "Registration/CreateOrganisation");
 
         }
 
         public Task<bool> UpdateOrgnaisationAsync(View_Organisation.UpdateOrganisation vwOrg)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<AssignOganisationOwnerUser> AssignOrganisationOwnerAsyn(AssignOganisationOwnerUser dto)
+        {
+
+            var createdOrganisation = await _apigateway.ApiPostAsync<Organisation.AssignOganisationOwnerUser>(dto, "Registration/CreateTanentOwner");
+
+            return JsonSerializer.Deserialize<Organisation.AssignOganisationOwnerUser>(createdOrganisation);
+
+            //return null;
         }
     }
 }
