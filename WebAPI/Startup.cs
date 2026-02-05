@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Data;
+using WebAPI.Middleware;
 using WebAPI.Model.Services;
 
 
@@ -67,6 +68,8 @@ namespace WebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ApplicationAccessMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

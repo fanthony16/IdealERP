@@ -30,8 +30,8 @@ namespace WebApiTest
 
             var valUser = new ValidateUser()
             {
-                Email = "fanthony16@yahoo.com",
-                Password = "STaiwo16.."
+                Email = "****",
+                Password = "****"
             };
             await ValidateUserAsync(valUser);
             Console.WriteLine("User Validated Successfully!");

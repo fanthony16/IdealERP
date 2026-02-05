@@ -22,13 +22,13 @@ namespace WebAPI.Controllers
             this.masterData = masterData;
         }
 
-        [HttpGet("GetAllCountry")]
+        [HttpGet("Countries")]
         public async Task<List<Country>> GetCountries()
         {
             return await masterData.GetAllCountryAsync();
         }
 
-        [HttpGet("GetAllCurrency")]
+        [HttpGet("Currencies")]
         public async Task<List<Currency>> GetCurrencies()
         {
             return await masterData.GetAllCurrencyAsync();

@@ -18,14 +18,14 @@ namespace WebApp.Data.Services
         }
         public async Task<List<Country>> GetAllCountry()
         {
-            var dbcountryjson = await _apigateway.ApiGetAsync("MasterData/GetAllCountry");
+            var dbcountryjson = await _apigateway.ApiGetAsync("MasterData/Countries");
             return JsonSerializer.Deserialize<List<Country>>(dbcountryjson);
             
         }
 
         public async Task<List<Currency>> GetAllCurrency()
         {
-            var dbcurrencyjson = await _apigateway.ApiGetAsync("MasterData/GetAllCurrency");
+            var dbcurrencyjson = await _apigateway.ApiGetAsync("MasterData/Currencies");
             return JsonSerializer.Deserialize<List<Currency>>(dbcurrencyjson);
             
         }

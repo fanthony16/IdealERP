@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet("GetAllUser")]
+        [HttpGet("Users")]
         public async Task<ActionResult<List<UserList>>> GetAllUser([FromQuery] char AccountType) 
         {
             var _users = await userService.GetAllUsersAsync(AccountType);

@@ -56,7 +56,7 @@ namespace WebApp.Data.Services
         public async Task<AssignOganisationOwnerUser> AssignOrganisationOwnerAsyn(AssignOganisationOwnerUser dto)
         {
 
-            var createdOrganisation = await _apigateway.ApiPostAsync<Organisation.AssignOganisationOwnerUser>(dto, "Registration/CreateTanentOwner");
+            var createdOrganisation = await _apigateway.ApiPostAsync<Organisation.AssignOganisationOwnerUser>(dto, "Registration/TanentOwner");
 
             return JsonSerializer.Deserialize<Organisation.AssignOganisationOwnerUser>(createdOrganisation);
 

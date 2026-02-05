@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
             
             this.registrationService = registrationService;
         }
-        [HttpPost("CreateOrganisation")]
+        [HttpPost("Organisation")]
         public async Task<IActionResult> CreateOrg([FromBody] CreateOrganisation dto)
         {
 
@@ -41,14 +41,14 @@ namespace WebAPI.Controllers
             return Ok(createdOrganisation);
 
         }
-        [HttpGet("GetAllOrganisation")]
+        [HttpGet("Organisations")]
         public async Task<ActionResult<List<Organisations>>> GetAllOrg()
         {
             var _users = await registrationService.GetAllOrganisationAsync();
             return Ok(_users);
         }
 
-        [HttpPost("CreateTanentOwner")]
+        [HttpPost("TanentOwner")]
         public async Task<IActionResult> AssignTenantOwner([FromBody] AssignOganisationOwnerUser dto)
         {
 
