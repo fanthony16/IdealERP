@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Data.Services;
+using WebApp.Data.Services.Implementation;
+using WebApp.Data.Services.Interface;
 using WebApp.Utilities;
 using WebApp.WebManager;
 
@@ -31,6 +33,7 @@ namespace WebApp
             services.AddScoped<IAccountsvr, Accountsvr>();
             services.AddScoped<IMasterData, MasterData>();
             services.AddScoped<IOrganisationsvr, Organisationsvr>();
+            services.AddScoped<ICompanys, Companysvr>();
 
             services.AddSession(options =>
             {

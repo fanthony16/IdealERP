@@ -26,7 +26,7 @@ namespace WebApp.Data.Services
         public async Task<List<Organisation.Organisations>> GetOrganisationsAsyn()
         {
 
-            var Organisations_json = await _apigateway.ApiGetAsync("Registration/GetAllOrganisation");
+            var Organisations_json = await _apigateway.ApiGetAsync("Registration/Organisations");
             return JsonSerializer.Deserialize<List<Organisation.Organisations>>(Organisations_json);
 
 
@@ -34,14 +34,14 @@ namespace WebApp.Data.Services
 
         public async Task<List<User.ValidUser>> GetUnAssignedAccountsAsyn()
         {
-            var accounts_json = await _apigateway.ApiGetAsync("User/GetAllUser?AccountType=U");
+            var accounts_json = await _apigateway.ApiGetAsync("User/Users?AccountType=U");
             return JsonSerializer.Deserialize<List<User.ValidUser>>(accounts_json);
         }
 
         public async Task<Organisation.Organisations> RegisterOrgnaisationAysnc(Organisation.CreateOrganisation dto)
         {
 
-            var createdOrganisation = await _apigateway.ApiPostAsync<Organisation.CreateOrganisation>(dto, "Registration/CreateOrganisation");
+            var createdOrganisation = await _apigateway.ApiPostAsync<Organisation.CreateOrganisation>(dto, "Registration/Organisation");
 
             return JsonSerializer.Deserialize<Organisation.Organisations>(createdOrganisation);
 

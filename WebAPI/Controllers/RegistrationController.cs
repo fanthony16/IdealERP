@@ -33,6 +33,7 @@ namespace WebAPI.Controllers
             }
 
             var createdOrganisation = await registrationService.CreateOrganisationAsync(dto);
+
             if (createdOrganisation is null)
             {
                 return NotFound(new { message = $"Organisation Creation Failed" });

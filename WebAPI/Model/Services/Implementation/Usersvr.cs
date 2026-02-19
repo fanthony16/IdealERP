@@ -24,7 +24,7 @@ namespace WebAPI.Model.Services
             throw new NotImplementedException();
         }
 
-        public UserList MapToUser(TblUser dbUser)
+        public UserList MapToUser(VwUser dbUser)
         {
             return new UserList
             {
@@ -33,7 +33,8 @@ namespace WebAPI.Model.Services
                 LastName = dbUser.LastName,
                 PhoneNumber = dbUser.PhoneNumber,
                 Status = dbUser.Status == 1 ? "Active" : dbUser.Status == 2 ? "Suspended" : "Pending",
-                UserID = dbUser.Id
+                UserID = dbUser.Id,
+                OrganisationID = dbUser.OrganizationId
             };
         }
 
@@ -49,22 +50,28 @@ namespace WebAPI.Model.Services
             if (userCategory.Equals("U"))
             {
 
-                var users = dbContext.TblUsers.Where(a => !dbContext.TblUserOrganizations.Any(b => b.UserId == a.Id));
-                return users.Select(MapToUser).ToList();
+                var users = dbContext.VwUsers.Where(a => !dbContext.TblUserOrganizations.Any(b => b.UserId == a.Id));
 
+                if (users is not null)
+                {
+                    return users.Select(MapToUser).ToList();
+                }
+
+                return null;
             }
             else
             {
 
-                var users = await dbContext.TblUsers.ToListAsync();
-                return users.Select(MapToUser).ToList();
+                var users = await dbContext.VwUsers.ToListAsync();
+                if (users is not null)
+                {
+
+                    return users.Select(MapToUser).ToList();
+
+                }
+                return null;
                 
             }
-
-
-
-
-            //var result = dbContext.TblUsers.Where(a => !dbContext.TblUserOrganizations.Any(b => b.UserId == a.Id));
 
         }
 
@@ -85,7 +92,7 @@ namespace WebAPI.Model.Services
 
         }
 
-        public async Task<UserList> RegisterUserAsyn(RegisterUser dto)
+        public async Task<UserList> RegisterUserAsyn (RegisterUser dto)
         {
             
             TblUser nUser = new() { 
@@ -96,26 +103,75 @@ namespace WebAPI.Model.Services
             PasswordHash = pwdHelper.HashPassword(dto.Password)
             
         };
+            try {
+                await dbContext.TblUsers.AddAsync(nUser);
+                await dbContext.SaveChangesAsync();
+                var nwuser = await dbContext.VwUsers.Where(x => x.Id == nUser.Id).FirstOrDefaultAsync();
+
+                return MapToUser(nwuser);
+                
+            }
+            catch(Exception ex)
+            {
+
+                var apierr = new UserList
+                {
+                    err = ReturnError(ex, "Account_Registration_Err")
+                };
+              
+                return apierr;
+            //ex.InnerException.Message();
+        }
+
+           
+           
             
-            await dbContext.TblUsers.AddAsync(nUser);
-            await dbContext.SaveChangesAsync();
-            
-            return MapToUser(nUser); 
-            
+        }
+
+        public APIError ReturnError(Exception err, string _source)
+        {
+            var _error = new APIError()
+            {               
+                ErrorCode = _source,
+                Detail = new List<string>(){ err.InnerException.Message },
+                Message= err.Message,
+                
+            };
+            return _error;
         }
 
         public async Task<UserList> ValidateUserAsyn(ValidateUser dto)
         {
-            var _user = await dbContext.TblUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
+
+            
+
+            //var _user = await dbContext.TblUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
+
+            var _user = await dbContext.VwUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
+
+
+            //    var _user =  await dbContext.TblUsers.Where(x => x.Email == dto.Email)
+            //.Join(
+            //    dbContext.TblUserOrganizations ,
+            //    u => u.Id,
+            //    o => o.UserId,
+            //    (u, o) => new 
+            //    {
+            //      u.Id, u.Email, u.PasswordHash, u.FirstName,u.LastName, u.PhoneNumber, u.Status, u.EmailVerified,o.OrganizationId
+            //    }
+            //)
+            //.FirstOrDefaultAsync();
+
+
+
 
             if (_user != null)
             {
 
                 if (pwdHelper.VerifyPassword(_user.PasswordHash, dto.Password))
                 {
-                    //return true;
 
-                  return  MapToUser(_user);
+                    return MapToUser(_user);
 
                 }
 

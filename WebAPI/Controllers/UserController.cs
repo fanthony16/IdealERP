@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,18 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles ="Admin")]
     public class UserController : ControllerBase
     {
-        private readonly IdealERPContext dbContext;
+        
         private readonly IUser userService;
+        private readonly ValidationErrors valErrors;
+        private readonly APIError apiError;
 
-        public UserController(IdealERPContext dbContext, IUser userService)
+        public UserController(IUser userService, ValidationErrors valErrors, APIError apiError)
         {
-            this.dbContext = dbContext;
+            this.valErrors = valErrors;
+            this.apiError = apiError;
             this.userService = userService;
         }
         
@@ -29,13 +34,19 @@ namespace WebAPI.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                apiError.Detail = valErrors.getValidationErrors(ModelState);
+                apiError.Message = "Account_Creation";
+                return BadRequest(apiError);
+
             }
 
             var createdUser = await userService.RegisterUserAsyn(dto);
-            if (createdUser is null)
+
+            if (createdUser.Email == "")
             {
+
                 return NotFound(new { message = $"User Registration Failed" });
+
             }
 
             return Ok(createdUser);
@@ -51,16 +62,24 @@ namespace WebAPI.Controllers
 
             if (!ModelState.IsValid)
             {
+
+                apiError.Detail = valErrors.getValidationErrors(ModelState);
+                apiError.Message = "Account_Validation";
+
                 return BadRequest(ModelState);
+
             }
 
             var ValidatedUser = await userService.ValidateUserAsyn(dto);
-            if (ValidatedUser is null)
+
+            if (ValidatedUser != null)
             {
-                return NotFound(new { message = $"Invalid Username or Password" });
+                return Ok(ValidatedUser);
+                
             }
 
-            return Ok(ValidatedUser);
+            return NotFound(new { message = $"Invalid Username or Password" });
+
         }
 
 
@@ -68,7 +87,13 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<List<UserList>>> GetAllUser([FromQuery] char AccountType) 
         {
             var _users = await userService.GetAllUsersAsync(AccountType);
+
+            if (_users != null)
+            {
+                return NotFound(new { message = $"Users Not Found" });
+            }
             return Ok(_users);
+
         }
 
 

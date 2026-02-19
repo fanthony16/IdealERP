@@ -15,10 +15,11 @@ namespace WebAPI.Data
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int MaxUsers { get; set; }
-        public byte[] ModulesEnabled { get; set; }
+        public string ModulesEnabled { get; set; }
         public decimal Price { get; set; }
         public string Currency { get; set; }
 
+        public virtual TblCurrency CurrencyNavigation { get; set; }
         public virtual ICollection<TblSubscription> TblSubscriptions { get; set; }
     }
 }

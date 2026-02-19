@@ -10,6 +10,7 @@ namespace WebAPI.Data
         public TblCurrency()
         {
             TblOrganisations = new HashSet<TblOrganisation>();
+            TblPlans = new HashSet<TblPlan>();
         }
 
         public int Id { get; set; }
@@ -17,5 +18,6 @@ namespace WebAPI.Data
         public string Description { get; set; }
 
         public virtual ICollection<TblOrganisation> TblOrganisations { get; set; }
+        public virtual ICollection<TblPlan> TblPlans { get; set; }
     }
 }

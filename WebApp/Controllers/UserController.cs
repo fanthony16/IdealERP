@@ -38,15 +38,46 @@ namespace WebApp.Controllers
                     Password = vwLogin.Password
                 };
 
-                if (await _accountsvr.ValidateAccount(valLogin) is not null)
+                _sessionManager.SaveSessionObject(vwLogin.Email, "email");
+                _sessionManager.SaveSessionObject(vwLogin.Password,"pwd");
+                
+
+                var validAccount = await _accountsvr.ValidateAccount(valLogin);
+
+                if (validAccount != null && validAccount.Email.ToString() != "")
                 {
-                    
+
+                    var sessionValues = new Dictionary<string, string>
+                    {
+                        ["user"] = $"{validAccount.FirstName} {validAccount.LastName}",
+                        ["page_title"] = "Dashboard",
+                        ["userid"] = validAccount.UserID.ToString(),
+                        ["organisationid"] = validAccount.OrganisationID.ToString()
+                    };
+
+                    foreach (var item in sessionValues)
+                    {
+                        _sessionManager.SaveSessionObject(item.Value, item.Key);
+                    }
+
                     return RedirectToAction("Index","Home");
 
                 }
+                else
+                {
+                    if (validAccount.err == null)
+                    {
+                        ViewData["Message"] = validAccount.message;
+                    }
+                    else
+                    {
+                        ViewData["Message"] = validAccount.err.Message;
+                    }
+                    
+                }
 
             }
-            ViewData["Message"] = "User name or Password is Incorrect";
+            _sessionManager.ClearAllSession();
             return View();
         }
 
@@ -69,7 +100,7 @@ namespace WebApp.Controllers
                 {
 
                     var registeredUser = await _accountsvr.RegisterAccount(nwAccount);
-                    if (registeredUser != null)
+                    if (registeredUser != null && registeredUser.Email != "")
                     {
 
                         var sessionValues = new Dictionary<string, string>
@@ -85,16 +116,17 @@ namespace WebApp.Controllers
                         }
 
                         return RedirectToAction("Welcome");
-
+                        
                     }
+                    ViewData["Message"] = registeredUser.err.Message;
                 }
-
+                
             }
             catch (Exception ex)
             {
 
             }
-            //return RedirectToAction("Register", ModelState);
+            
             return View();
         }
 

@@ -24,7 +24,24 @@ namespace WebApp.Data.Services
 
             var _validatedUser = await _apigateway.ApiPostAsync<User.ValidateUser>(_loginaccount, "User/ValidateUser");
 
-            return JsonSerializer.Deserialize<User.ValidUser>(_validatedUser);
+            try {
+
+                return JsonSerializer.Deserialize<User.ValidUser>(_validatedUser);
+
+            }
+            catch
+            {
+                var _response = new User.ValidUser()
+                {
+                   
+                    err = new APIError
+                    {
+                        Message = _validatedUser,
+                    }
+
+                };
+                return _response;
+            }
 
         }
 
@@ -40,16 +57,11 @@ namespace WebApp.Data.Services
                 
             };
             //call api and make a post request for account creation
+
             var _validatedUser = await _apigateway.ApiPostAsync<User.CreateUser>(nwUser, "User/RegisterUser");
             return JsonSerializer.Deserialize<User.ValidUser>(_validatedUser);
             
-
-
-            
-
         }
-
-      
 
         public Task<User.ValidUser> UpdateAccount(Register _editaccount)
         {

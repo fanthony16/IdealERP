@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,8 @@ using System.Threading.Tasks;
 using WebAPI.Data;
 using WebAPI.Middleware;
 using WebAPI.Model.Services;
-
+using WebAPI.Model.Services.Implementation;
+using WebAPI.Model.Services.Interface;
 
 namespace WebAPI
 {
@@ -44,15 +46,18 @@ namespace WebAPI
 
 
             services.AddDbContext<IdealERPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdealERPConnection")));
-
             services.AddScoped<IUser, Usersvr>();
             services.AddScoped<IOrganisationsvr, Organisationsvr>();
+            services.AddScoped<ICompany, Companysvr>();
+            services.AddScoped<ValidationErrors>();
+            services.AddScoped<APIError>();
             
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IMasterData, MasterData>();
 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,18 +68,26 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
+
             }
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
-            app.UseMiddleware<ApplicationAccessMiddleware>();
+            // app.UseMiddleware<ApplicationAccessMiddleware>();
+
+            app.UseMiddleware<ExceptionMiddleware>();
+
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

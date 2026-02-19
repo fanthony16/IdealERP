@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Model.Services;
 
 namespace WebAPI.Model.DTO
 {
@@ -11,16 +12,20 @@ namespace WebAPI.Model.DTO
         public class UserList {
 
             public Guid UserID { get; set; }
-            
+
+            public Guid OrganisationID { get; set; }
+
             public string FirstName  { get; set; }
 
             public string LastName { get; set; }
 
             public string PhoneNumber { get; set; }
 
-            public string Email { get; set; }
+            public string Email { get; set; } = "";
 
             public string Status { get; set; }
+
+            public APIError err { get; set; }
 
         }
 
