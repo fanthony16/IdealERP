@@ -25,12 +25,6 @@ namespace WebAPI.Controllers
             this.apiError = apiError;
         }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return Ok();
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
@@ -38,29 +32,32 @@ namespace WebAPI.Controllers
             if (!string.IsNullOrEmpty(id))
             {
 
-                //return Ok(await companyService.GetOrgCompanysAsync(id));
-
                 var result = await companyService.GetOrgCompanysAsync(id);
                 return Ok(result);
-
-                //if (result.Count > 0)
-                //{
-                //    return Ok(result);
-                //}
-                //else
-                //{
-                //    return NotFound(id);
-                //}
 
             }
 
             return BadRequest("Organisation ID is Required");
 
-            //return Ok(new { message = "No Company found" });
+        }
+
+        [HttpGet("Find")]
+        public async Task<IActionResult> GetCompany(string id, string coyid)
+        {
+
+            if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(coyid))
+            {
+
+                var result = await companyService.GetCompanyAsync(id,coyid);
+                return Ok(result);
+
+            }
+
+            return BadRequest("Organisation ID and Company ID is Required");
 
         }
 
-        [HttpPost]
+        [HttpPost("New")]
         public async Task<IActionResult> Create([FromBody] Companys.CreateCompany dto)
         {
 
@@ -74,6 +71,30 @@ namespace WebAPI.Controllers
             }
 
             var dbCompany = await companyService.CreateCompanyAsync(dto);
+
+            if (dbCompany is null)
+            {
+                return NotFound(new { message = $"Company Creation Failed" });
+            }
+
+            return Ok(dbCompany);
+
+        }
+
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromBody] Companys.UpdateCompany dto)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                //apiError.Detail = valErrors.getValidationErrors(ModelState);
+                //apiError.ErrorCode = "Update_Creation";
+                
+                return BadRequest(ModelState);
+
+            }
+
+            var dbCompany = await companyService.UpdateCompanyAsync(dto);
 
             if (dbCompany is null)
             {

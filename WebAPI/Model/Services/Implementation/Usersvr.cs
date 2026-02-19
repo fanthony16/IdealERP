@@ -150,17 +150,25 @@ namespace WebAPI.Model.Services
             var _user = await dbContext.VwUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
 
 
-            //    var _user =  await dbContext.TblUsers.Where(x => x.Email == dto.Email)
-            //.Join(
-            //    dbContext.TblUserOrganizations ,
-            //    u => u.Id,
-            //    o => o.UserId,
-            //    (u, o) => new 
-            //    {
-            //      u.Id, u.Email, u.PasswordHash, u.FirstName,u.LastName, u.PhoneNumber, u.Status, u.EmailVerified,o.OrganizationId
-            //    }
-            //)
-            //.FirstOrDefaultAsync();
+        //    var _userr = await dbContext.TblUsers.Where(x => x.Email == dto.Email)
+        //.Join(
+        //    dbContext.TblUserOrganizations,
+        //    u => u.Id,
+        //    o => o.UserId,
+        //    (u, o) => new
+        //    {
+        //        u.Id,
+        //        u.Email,
+        //        u.PasswordHash,
+        //        u.FirstName,
+        //        u.LastName,
+        //        u.PhoneNumber,
+        //        u.Status,
+        //        u.EmailVerified,
+        //        o.OrganizationId
+        //    }
+        //)
+        //.FirstOrDefaultAsync();
 
 
 

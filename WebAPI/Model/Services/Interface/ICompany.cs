@@ -10,9 +10,11 @@ namespace WebAPI.Model.Services.Interface
     {
         public Task<Companys.Company> CreateCompanyAsync(Companys.CreateCompany newCompany);
 
+        public Task<Companys.Company> UpdateCompanyAsync(Companys.UpdateCompany company);
+
         public Task<Companys.Company> EditCompanyAsync(Companys.UpdateCompany editCompany);
 
-        public Task<Companys.Company> GetCompanyAsync(string id);
+        public Task<Companys.Company> GetCompanyAsync(string id, string coyid);
 
         public Task<List<Companys.Company>> GetOrgCompanysAsync(string id);
 

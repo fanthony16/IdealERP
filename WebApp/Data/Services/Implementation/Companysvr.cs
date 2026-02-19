@@ -27,25 +27,42 @@ namespace WebApp.Data.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<Companys.Company> GetCompany(string organisationID, string companyID)
+        public async Task<View_Companys.UpdateCompany> GetCompanyAsync(string organisationID, string companyID)
         {
+            var dbCompanys = await _apigateway.ApiGetAsync($"Company/Find/?id={organisationID}&coyid={companyID}");
+
+            return JsonSerializer.Deserialize<View_Companys.UpdateCompany>(dbCompanys);
             
-            throw new NotImplementedException();
 
         }
 
-        public async Task<List<View_Companys.Company>> GetCompanys(string organisationID)
+        public async Task<List<View_Companys.UpdateCompany>> GetCompanys(string organisationID)
         {
             var dbCompanys = await _apigateway.ApiGetAsync($"Company/{organisationID}");
 
-            return JsonSerializer.Deserialize<List<View_Companys.Company>>(dbCompanys);
+            return JsonSerializer.Deserialize<List<View_Companys.UpdateCompany>>(dbCompanys);
 
             
         }
 
-        public Task<Companys.Company> updateCompany(Companys.Company _company)
+        public async Task<bool> UpdateCompany(View_Companys.UpdateCompany company)
         {
-            throw new NotImplementedException();
+
+            var result = await _apigateway.ApiPostAsync<View_Companys.UpdateCompany>(company, "Company/Update");
+
+            try
+            {
+                var updatedcompany = JsonSerializer.Deserialize<View_Companys.UpdateCompany>(result);
+                return true;
+            }
+            catch 
+            {
+                return false;               
+            }
+            
+
+            
+            
         }
 
        

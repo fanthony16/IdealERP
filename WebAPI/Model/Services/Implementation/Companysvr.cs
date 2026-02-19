@@ -61,24 +61,27 @@ namespace WebAPI.Model.Services.Implementation
             {
                 await dbContext.TblCompanies.AddAsync(nwCompany);
                 await dbContext.SaveChangesAsync();
+                
                 return MapToCoy(nwCompany);
             }
             catch(Exception ex)
             {
-                var coyErr = new Companys.Company
-                {
-                    Err = new APIError
-                    {
-                        Message = ex.Message,
-                        Detail = new List<string>(),
-                        ErrorCode = "Company_Creating_Error",
+
+                throw new Exception("An Error Occurred Creating Company");
+
+                //var coyErr = new Companys.Company
+                //{
+                //    Err = new APIError
+                //    {
+                //        Message = ex.Message,
+                //        Detail = new List<string>(),
+                //        ErrorCode = "Company_Creating_Error",
                         
-                    }
-                };
-                return coyErr;
+                //    }
+                //};
+                //return coyErr;
             }
             
-
         }
 
         public async Task<Companys.Company> EditCompanyAsync(Companys.UpdateCompany editCompany)
@@ -148,14 +151,13 @@ namespace WebAPI.Model.Services.Implementation
             
         }
 
-        public async Task<Companys.Company> GetCompanyAsync(string id)
+        public async Task<Companys.Company> GetCompanyAsync(string id, string coyid)
         {
-            var dbCoy = await dbContext.TblCompanies.FindAsync(id);
+            var dbCoy = await dbContext.TblCompanies.Where(c => c.OrganisationId.ToString() == id && c.Id.ToString() == coyid).FirstOrDefaultAsync();
 
-            if (dbCoy is not null)
+            if (dbCoy != null)
             {
                 return MapToCoy(dbCoy);
-
             }
 
             return new Companys.Company { 
@@ -170,9 +172,6 @@ namespace WebAPI.Model.Services.Implementation
         {
 
             var orgCoys = await dbContext.TblCompanies.Where(x => x.OrganisationId.ToString() == id).ToListAsync();
-
-            //if(orgCoys != null)
-            //{
 
 
             if (orgCoys != null) {
@@ -196,6 +195,66 @@ namespace WebAPI.Model.Services.Implementation
             //    }
             //};
 
+        }
+
+        public async Task<Companys.Company> UpdateCompanyAsync(Companys.UpdateCompany company)
+        {
+            var dbCompany = await dbContext.TblCompanies.Where(c => c.Id == company.CompanyID).FirstOrDefaultAsync();
+
+            if (dbCompany != null)
+            {
+                dbCompany.Name = company.Name;
+                dbCompany.Address2 = company.Address2;
+                dbCompany.BankAccountNo = company.BankAccountNo;
+                dbCompany.BankAccPostingGroup = company.BankAccountPostingGroup;
+                dbCompany.BankBranchNo = company.BankBranchNo;
+                dbCompany.BankName = company.BankName;
+                dbCompany.City = company.City;
+                dbCompany.ContactName = company.ContactName;
+                dbCompany.Country = company.Country;
+                dbCompany.County = company.County;
+                dbCompany.Email = company.Email;
+                dbCompany.FaxNo = company.FaxNo;
+                dbCompany.GiroNo = company.GiroNo;
+                dbCompany.Iban = company.Iban;
+                dbCompany.Name = company.Name;
+                dbCompany.PaymentRoutingNo = company.PaymentRoutingNo;
+                dbCompany.PhoneNo = company.PhoneNo;
+                dbCompany.PictureUrl = company.PictureUrl;
+                dbCompany.PostCode = company.PostCode;
+                dbCompany.ShipToAddress = company.ShipToAddress;
+                dbCompany.ShipToAddress2 = company.ShipToAddress2;
+                dbCompany.ShipToCity = company.ShipToCity;
+                dbCompany.ShipToContact = company.ShipToContact;
+                dbCompany.ShipToCountry = company.ShipToCountry;
+                dbCompany.ShipToCounty = company.ShipToCounty;
+                dbCompany.ShipToLocation = company.ShipToLocation;
+                dbCompany.ShipToName = company.ShipToName;
+                dbCompany.ShipToPostCode = company.ShipToPostCode;
+                dbCompany.SwiftCode = company.SwiftCode;
+                dbCompany.VatRegNo = company.VatRegNo;
+                dbCompany.Website = company.Website;
+                dbCompany.Address = company.Address;
+                dbCompany.Address2 = company.Address2;
+
+            }
+
+            try
+            {
+                dbContext.TblCompanies.Update(dbCompany);
+                await dbContext.SaveChangesAsync();
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+
+          
+
+           return MapToCoy(dbCompany);
+
+
+
+           
         }
 
         private Companys.Company MapToCoy(TblCompany dbCoy)

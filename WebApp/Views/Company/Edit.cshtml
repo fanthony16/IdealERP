@@ -1,0 +1,436 @@
+﻿@model WebApp.ViewModels.View_Companys.UpdateCompany
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+
+<div class="row justify-content-center">
+    <div class="w-100">
+
+        <div class="card shadow-lg p-4">
+
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <a class="nav-link collapsed pt-0 pl-0 ml-0" href="#" data-toggle="collapse" data-target="#dvGeneral"
+                   aria-expanded="true" aria-controls="dvGeneral">
+                    <i class="fas fa-fw"></i>
+                    <span>General</span>
+                </a>
+
+                <div id="dvGeneral" class="row">
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Name" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="Name" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Address" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="Address" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Address2" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="Address2" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Address2" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="City" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="City" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="County" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="County" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="County" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="PostCode" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="PostCode" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="PostCode" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Country" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="Country" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Country" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ContactName" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ContactName" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ContactName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3"><label asp-for="PhoneNo" class="control-label required"></label></div>
+
+                            <div class="col-8">
+                                <input id="txtlegalname" asp-for="PhoneNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3"><label asp-for="VatRegNo" class="control-label required"></label></div>
+
+                            <div class="col-8">
+                                <input id="txtlegalname" asp-for="VatRegNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="VatRegNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3"><label asp-for="PictureUrl" class="control-label required"></label></div>
+
+                            <div class="col-8">
+                                <input id="txtlegalname" asp-for="PictureUrl" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="PictureUrl" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <a class="nav-link collapsed pt-0 pl-0 ml-0" href="#" data-toggle="collapse" data-target="#dvCommunication"
+                   aria-expanded="true" aria-controls="dvCommunication">
+                    <i class="fas fa-fw"></i>
+                    <span>Communication</span>
+                </a>
+
+                <div id="dvCommunication" class="row">
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="PhoneNo" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="PhoneNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="FaxNo" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="FaxNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="FaxNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Email" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="Email" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Website" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="Website" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Website" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <a class="nav-link collapsed pt-0 pl-0 ml-0" href="#" data-toggle="collapse" data-target="#dvPayment"
+                   aria-expanded="true" aria-controls="dvPayment">
+                    <i class="fas fa-fw"></i>
+                    <span>Payment</span>
+                </a>
+
+                <div id="dvPayment" class="row">
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="BankName" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="BankName" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="BankName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="BankBranchNo" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="BankBranchNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="BankBranchNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="BankAccountNo" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="BankAccountNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="BankAccountNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="PaymentRoutingNo" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="PaymentRoutingNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="PaymentRoutingNo" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="GiroNo" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="GiroNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="GiroNo" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="SwiftCode" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="SwiftCode" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="SwiftCode" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Iban" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="Iban" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Iban" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="BankAccountPostingGroup" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="BankAccountPostingGroup" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="BankAccountPostingGroup" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <a class="nav-link collapsed pt-0 pl-0 ml-0" href="#" data-toggle="collapse" data-target="#dvShipping"
+                   aria-expanded="true" aria-controls="dvShipping">
+                    <i class="fas fa-fw"></i>
+                    <span>Shipping</span>
+                </a>
+
+                <div id="dvShipping" class="row">
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToName" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToName" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToAddress" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToAddress" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToAddress2" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToAddress2" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToAddress2" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToCity" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToCity" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToCity" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToCounty" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToCounty" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToCounty" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col">
+
+                        
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToPostCode" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToPostCode" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToPostCode" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToCountry" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToCountry" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToCountry" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToContact" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToContact" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToContact" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="ShipToLocation" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="ShipToLocation" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="ShipToLocation" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnAddNewReg" type="submit" class="btn btn-primary">Save Changes</button>
+
+                    @*<input type="submit" value="Register Account" class="btn btn-facebook btn-user btn-block" />*@
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
