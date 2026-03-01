@@ -29,6 +29,7 @@ namespace WebApp
         {
             services.AddControllersWithViews();
             services.AddScoped<APIGateway>();
+            services.AddScoped<FileUploadProcessor>();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddScoped<IAccountsvr, Accountsvr>();
             services.AddScoped<IMasterData, MasterData>();

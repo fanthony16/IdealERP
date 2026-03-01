@@ -65,7 +65,6 @@ namespace WebAPI.Controllers
             {
                 apiError.Detail = valErrors.getValidationErrors(ModelState);
                 apiError.ErrorCode = "Company_Creation";
-
                 return BadRequest(apiError);
 
             }

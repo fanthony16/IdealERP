@@ -52,13 +52,15 @@ namespace WebApp.Controllers
             var dblstOrgs = await org_registration.GetOrganisationsAsyn();
             var dblstUnassignedOrgAccounts = await org_registration.GetUnAssignedAccountsAsyn();
 
-            var SelectListData = await getSelectedListItemDataAsync();
+
+
+            //var SelectListData = await getSelectedListItemDataAsync();
             var lstOrgs = dblstOrgs.Select(MapToView).ToList();
             var vworg = new View_Organisation.OrganisationObj()
             {
                 Orgs = lstOrgs,
-                Countries = SelectListData[0],
-                Currencies = SelectListData[1],
+                Countries = await masterdata.GetSelectListCountry(),
+                Currencies = await masterdata.GetSelectListCurrency(),
                 AllUnAssignedAccounts = dblstUnassignedOrgAccounts
             };
             
@@ -68,13 +70,13 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Register() {
 
-            var SelectListData = await getSelectedListItemDataAsync();
+            //var SelectListData = await getSelectedListItemDataAsync();
 
             var vworg = new View_Organisation.Create_Organisation()
             {
                 
-                Countries = SelectListData[0],
-                Currencies = SelectListData[1]
+                Countries = await masterdata.GetSelectListCountry(),
+                Currencies = await masterdata.GetSelectListCurrency()
 
             };
 
@@ -111,13 +113,17 @@ namespace WebApp.Controllers
 
                 if (createdOrganisation is null)
                 {
-                    var SelectListData = await getSelectedListItemDataAsync();
+                    //var SelectListData = await getSelectedListItemDataAsync();
 
                     var vworg = new View_Organisation.Create_Organisation()
                     {
+                        //company.Countries = await masterdata.GetSelectListCountry();
+                        //Countries = SelectListData[0],
+                        //Currencies = SelectListData[1]
 
-                        Countries = SelectListData[0],
-                        Currencies = SelectListData[1]
+                        Countries = await masterdata.GetSelectListCountry(),
+                        Currencies = await masterdata.GetSelectListCurrency()
+
 
                     };
                     ViewBag["Message"] = "An Error Occur Creating Organisation. Try again";
@@ -155,39 +161,39 @@ namespace WebApp.Controllers
             return false;
         }
 
-        private async Task<List<List<SelectListItem>>> getSelectedListItemDataAsync()
-        {
-            List<Country> countries = await masterdata.GetAllCountry();
-            List<Currency> currencies = await masterdata.GetAllCurrency();
+        //private async Task<List<List<SelectListItem>>> getSelectedListItemDataAsync()
+        //{
+        //    List<Country> countries = await masterdata.GetAllCountry();
+        //    List<Currency> currencies = await masterdata.GetAllCurrency();
 
-            var SelectlstCountry = countries.ToList().ConvertAll(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Code
-            });
+        //    var SelectlstCountry = countries.ToList().ConvertAll(x => new SelectListItem
+        //    {
+        //        Text = x.Name,
+        //        Value = x.Code
+        //    });
 
-            var SelectlstCurrency = currencies.ToList().ConvertAll(x => new SelectListItem
-            {
-                Text = x.Code + " - " + x.Description,
-                Value = x.Code
-            });
+        //    var SelectlstCurrency = currencies.ToList().ConvertAll(x => new SelectListItem
+        //    {
+        //        Text = x.Code + " - " + x.Description,
+        //        Value = x.Code
+        //    });
 
-            var vworg = new View_Organisation.Create_Organisation()
-            {
+        //    var vworg = new View_Organisation.Create_Organisation()
+        //    {
 
-                Countries = SelectlstCountry,
-                Currencies = SelectlstCurrency
+        //        Countries = SelectlstCountry,
+        //        Currencies = SelectlstCurrency
 
-            };
+        //    };
 
-            var listSelectedItems = new List<List<SelectListItem>>
-                {
-                    SelectlstCountry,
-                    SelectlstCurrency
-                };
+        //    var listSelectedItems = new List<List<SelectListItem>>
+        //        {
+        //            SelectlstCountry,
+        //            SelectlstCurrency
+        //        };
 
 
-            return listSelectedItems;
-        }
+        //    return listSelectedItems;
+        //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,5 +12,9 @@ namespace WebApp.Data.Services
         public Task<List<Country>> GetAllCountry();
 
         public Task<List<Currency>> GetAllCurrency();
+
+        public Task<List<SelectListItem>> GetSelectListCurrency();
+
+        public Task<List<SelectListItem>> GetSelectListCountry();
     }
 }

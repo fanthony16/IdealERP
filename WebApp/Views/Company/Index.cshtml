@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.ViewModels.View_Companys.Company>
+﻿@model IEnumerable<WebApp.ViewModels.View_Companys.GetCompanys>
 
 @*@model IEnumerable<WebApp.Models.Dto.Companys.Company>*@
 
@@ -58,14 +58,15 @@
 
                 </div>
 
-                
+                <div class="text-left">
+                    
+                    <a asp-controller="Company" asp-action="Create" asp-route-id="1" class="btn btn-primary">Add New Company</a>
+
+                </div>
 
             </div>
         </div>
     
-
-
-
         
 
 </div>

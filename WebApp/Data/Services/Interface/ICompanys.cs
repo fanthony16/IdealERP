@@ -10,11 +10,11 @@ namespace WebApp.Data.Services.Interface
     public interface ICompanys
     {
         
-        Task<List<View_Companys.UpdateCompany>> GetCompanys(string organisationID);
+        Task<List<View_Companys.GetCompanys>> GetCompanysAsync(string organisationID);
 
-        Task<View_Companys.UpdateCompany> GetCompanyAsync(string organisationID, string companyID);
+        Task<View_Companys.GetCompanys> GetCompanyAsync(string organisationID, string companyID);
 
-        Task<CreateCompany> CreeatCompany(CreateCompany _company);
+        Task<bool> CreateCompany(View_Companys.CreateCompany company);
 
         Task<bool> UpdateCompany(View_Companys.UpdateCompany company);
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -19,6 +20,7 @@ namespace WebApp.Data.Services
         public async Task<List<Country>> GetAllCountry()
         {
             var dbcountryjson = await _apigateway.ApiGetAsync("MasterData/Countries");
+
             return JsonSerializer.Deserialize<List<Country>>(dbcountryjson);
             
         }
@@ -29,5 +31,36 @@ namespace WebApp.Data.Services
             return JsonSerializer.Deserialize<List<Currency>>(dbcurrencyjson);
             
         }
+
+        public async Task<List<SelectListItem>> GetSelectListCurrency()
+        {
+            var dbcurrencyjson = await _apigateway.ApiGetAsync("MasterData/Currencies");
+            var currencies = JsonSerializer.Deserialize<List<Currency>>(dbcurrencyjson);
+            var selectListCurrency = currencies.ToList().ConvertAll(x => new SelectListItem
+            {
+
+                Text = x.Code + " - " + x.Description,
+                Value = x.Code
+
+            });
+            return selectListCurrency;
+
+        }
+
+        public async Task<List<SelectListItem>> GetSelectListCountry()
+        {
+
+            var dbcurrencyjson = await _apigateway.ApiGetAsync("MasterData/Countries");
+            var countries = JsonSerializer.Deserialize<List<Country>>(dbcurrencyjson);
+
+            var selectListCountry = countries.ToList().ConvertAll(x => new SelectListItem 
+            {
+                Text = x.Name,
+                Value = x.Code
+            });
+
+            return selectListCountry;
+        }
+     
     }
 }

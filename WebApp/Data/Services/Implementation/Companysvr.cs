@@ -19,28 +19,39 @@ namespace WebApp.Data.Services.Implementation
         {
             this._apigateway = _apigateway;
         }
-        public async Task<Companys.CreateCompany> CreeatCompany(Companys.CreateCompany _company)
+        public async Task<bool> CreateCompany(View_Companys.CreateCompany company)
         {
 
-           
+            var result = await _apigateway.ApiPostAsync<View_Companys.CreateCompany>(company, "Company/New");
+
+            try
+            {
+                var createdcompany = JsonSerializer.Deserialize<View_Companys.CreateCompany>(result);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
 
             throw new NotImplementedException();
         }
 
-        public async Task<View_Companys.UpdateCompany> GetCompanyAsync(string organisationID, string companyID)
+        public async Task<View_Companys.GetCompanys> GetCompanyAsync(string organisationID, string companyID)
         {
             var dbCompanys = await _apigateway.ApiGetAsync($"Company/Find/?id={organisationID}&coyid={companyID}");
 
-            return JsonSerializer.Deserialize<View_Companys.UpdateCompany>(dbCompanys);
+            return JsonSerializer.Deserialize<View_Companys.GetCompanys>(dbCompanys);
             
 
         }
 
-        public async Task<List<View_Companys.UpdateCompany>> GetCompanys(string organisationID)
+        public async Task<List<View_Companys.GetCompanys>> GetCompanysAsync(string organisationID)
         {
             var dbCompanys = await _apigateway.ApiGetAsync($"Company/{organisationID}");
 
-            return JsonSerializer.Deserialize<List<View_Companys.UpdateCompany>>(dbCompanys);
+            return JsonSerializer.Deserialize<List<View_Companys.GetCompanys>>(dbCompanys);
 
             
         }

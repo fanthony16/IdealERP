@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,9 +13,9 @@ namespace WebApp.ViewModels
     {
         public class CreateCompany
         {
-
+            [Required]
             public Guid OrganisationId { get; set; }
-
+            [Required]
             public string Name { get; set; }
             public string Address { get; set; }
             public string Address2 { get; set; }
@@ -20,10 +23,12 @@ namespace WebApp.ViewModels
             public string County { get; set; }
             [Display(Name = "Post Code")]
             public string PostCode { get; set; }
-            public string Country { get; set; }
+            //public string Country { get; set; }
+
             [Display(Name = "Contact Name")]
             public string ContactName { get; set; }
 
+            [Required]
             [Display(Name = "Phone No")]
             public string PhoneNo { get; set; }
             [Display(Name = "VAT Reg No")]
@@ -34,6 +39,8 @@ namespace WebApp.ViewModels
             [Display(Name = "Fax No")]
             public string FaxNo { get; set; }
 
+            public string Country { get; set; }
+            [Required]
             public string Email { get; set; }
             public string Website { get; set; }
             public string BankName { get; set; }
@@ -67,12 +74,26 @@ namespace WebApp.ViewModels
             [Display(Name = "Ship To Location")]
             public string ShipToLocation { get; set; }
 
+            [Display(Name = "Company Logo")]
+            public IFormFile CompanyLogoFile { get; set; }
+
+            public string ImagePath { get; set; }
+
+            [NotMapped]
+            public IEnumerable<SelectListItem> Countries { get; set; }
+
         }
 
         public class UpdateCompany : CreateCompany
         {
             public Guid CompanyID { get; set; }
 
+        }
+        public class GetCompanys : CreateCompany
+        {
+            public Guid CompanyID { get; set; }
+
+           
         }
     }
 }
