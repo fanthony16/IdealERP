@@ -79,6 +79,8 @@ namespace WebApp.ViewModels
 
             public string ImagePath { get; set; }
 
+            public bool isDefault { get; set; }
+
             [NotMapped]
             public IEnumerable<SelectListItem> Countries { get; set; }
 

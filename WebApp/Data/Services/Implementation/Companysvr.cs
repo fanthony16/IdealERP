@@ -34,16 +34,13 @@ namespace WebApp.Data.Services.Implementation
                 return false;
             }
 
-
-            throw new NotImplementedException();
         }
 
         public async Task<View_Companys.GetCompanys> GetCompanyAsync(string organisationID, string companyID)
         {
-            var dbCompanys = await _apigateway.ApiGetAsync($"Company/Find/?id={organisationID}&coyid={companyID}");
 
+            var dbCompanys = await _apigateway.ApiGetAsync($"Company/Find/?id={organisationID}&coyid={companyID}");
             return JsonSerializer.Deserialize<View_Companys.GetCompanys>(dbCompanys);
-            
 
         }
 
@@ -54,6 +51,15 @@ namespace WebApp.Data.Services.Implementation
             return JsonSerializer.Deserialize<List<View_Companys.GetCompanys>>(dbCompanys);
 
             
+        }
+
+        public async Task<bool> SwitchCompany(string orgid, string coyId)
+        {
+            
+            var status = await _apigateway.ApiGetAsync($"Company/Switch/{orgid}/{coyId}");
+
+            return true;
+
         }
 
         public async Task<bool> UpdateCompany(View_Companys.UpdateCompany company)

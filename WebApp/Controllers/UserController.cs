@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Data.Services;
+using WebApp.Data.Services.Interface;
 using WebApp.Models.Dto;
 using WebApp.WebManager;
 using static WebApp.ViewModels.Account;
@@ -15,10 +16,13 @@ namespace WebApp.Controllers
     {
         private readonly IAccountsvr _accountsvr;
         private readonly ISessionManager _sessionManager;
-        public UserController(IAccountsvr _accountsvr, ISessionManager _sessionManager)
+        private readonly ICompanys _companys;
+
+        public UserController(IAccountsvr _accountsvr, ISessionManager _sessionManager, ICompanys _companys)
         {
             this._accountsvr = _accountsvr;
             this._sessionManager = _sessionManager;
+            this._companys = _companys;
         }
         public IActionResult Index()
         {
@@ -44,6 +48,10 @@ namespace WebApp.Controllers
 
                 var validAccount = await _accountsvr.ValidateAccount(valLogin);
 
+
+                var lstCompanys = await _companys.GetCompanysAsync(validAccount.OrganisationID.ToString());
+                var defaultcompany = lstCompanys.Where(c => c.isDefault = true).FirstOrDefault().Name.ToString();
+
                 if (validAccount != null && validAccount.Email.ToString() != "")
                 {
 
@@ -52,7 +60,9 @@ namespace WebApp.Controllers
                         ["user"] = $"{validAccount.FirstName} {validAccount.LastName}",
                         ["page_title"] = "Dashboard",
                         ["userid"] = validAccount.UserID.ToString(),
-                        ["organisationid"] = validAccount.OrganisationID.ToString()
+                        ["organisationid"] = validAccount.OrganisationID.ToString(),
+                        ["active_company"] = defaultcompany.ToString()
+
                     };
 
                     foreach (var item in sessionValues)

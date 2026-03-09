@@ -10,6 +10,7 @@ namespace WebAPI.Data
         public TblOrganisation()
         {
             TblAuditLogs = new HashSet<TblAuditLog>();
+            TblChartOfAccounts = new HashSet<TblChartOfAccount>();
             TblCompanies = new HashSet<TblCompany>();
             TblUserOrganizations = new HashSet<TblUserOrganization>();
         }
@@ -30,6 +31,7 @@ namespace WebAPI.Data
         public virtual TblCountry CountryNavigation { get; set; }
         public virtual TblCurrency CurrencyNavigation { get; set; }
         public virtual ICollection<TblAuditLog> TblAuditLogs { get; set; }
+        public virtual ICollection<TblChartOfAccount> TblChartOfAccounts { get; set; }
         public virtual ICollection<TblCompany> TblCompanies { get; set; }
         public virtual ICollection<TblUserOrganization> TblUserOrganizations { get; set; }
     }

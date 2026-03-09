@@ -143,14 +143,7 @@ namespace WebAPI.Model.Services
         public async Task<UserList> ValidateUserAsyn(ValidateUser dto)
         {
 
-            
-
-            //var _user = await dbContext.TblUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
-
-            var _user = await dbContext.VwUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
-
-
-        //    var _userr = await dbContext.TblUsers.Where(x => x.Email == dto.Email)
+        // var _userr = await dbContext.TblUsers.Where(x => x.Email == dto.Email)
         //.Join(
         //    dbContext.TblUserOrganizations,
         //    u => u.Id,
@@ -170,8 +163,7 @@ namespace WebAPI.Model.Services
         //)
         //.FirstOrDefaultAsync();
 
-
-
+        var _user = await dbContext.VwUsers.Where(x => x.Email == dto.Email).FirstOrDefaultAsync();
 
             if (_user != null)
             {

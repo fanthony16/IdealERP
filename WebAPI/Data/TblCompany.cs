@@ -7,6 +7,11 @@ namespace WebAPI.Data
 {
     public partial class TblCompany
     {
+        public TblCompany()
+        {
+            TblChartOfAccounts = new HashSet<TblChartOfAccount>();
+        }
+
         public Guid Id { get; set; }
         public Guid OrganisationId { get; set; }
         public string Name { get; set; }
@@ -40,8 +45,10 @@ namespace WebAPI.Data
         public string ShipToCountry { get; set; }
         public string ShipToContact { get; set; }
         public string ShipToLocation { get; set; }
+        public bool IsDefault { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public virtual TblOrganisation Organisation { get; set; }
+        public virtual ICollection<TblChartOfAccount> TblChartOfAccounts { get; set; }
     }
 }

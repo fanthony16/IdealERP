@@ -1,0 +1,236 @@
+﻿@model WebApp.ViewModels.View_ChartLedgerAccount.CreateLedgerAccount
+@using WebApp.Models.Enums
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="w-100">
+
+        <div class="card shadow-lg p-4">
+
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <a class="nav-link collapsed pt-0 pl-0 ml-0" href="#" data-toggle="collapse" data-target="#dvGeneral"
+                   aria-expanded="true" aria-controls="dvGeneral">
+                    <i class="fas fa-fw"></i>
+                    <span>General</span>
+                </a>
+
+                <div id="dvGeneral" class="row">
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="AccountNo" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input asp-for="AccountNo" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="AccountNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="Name" class="control-label required"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input asp-for="Name" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="IncomeBalance" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <select asp-for="IncomeBalance" class="form-control" asp-items="Html.GetEnumSelectList<EnumItems.Income_Balance>()">
+                                    <option></option>
+                                </select>
+                                
+                                <span asp-validation-for="IncomeBalance" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="AccountCategory" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+
+                                <select asp-for="AccountCategory" class="form-control" asp-items="Html.GetEnumSelectList<EnumItems.Account_Category>()">
+                                    <option>
+
+                                    </option>
+                                </select>
+
+                                <span asp-validation-for="AccountCategory" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="DebitCredit" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <select asp-for="DebitCredit", class="form-control" asp-items="Html.GetEnumSelectList<EnumItems.Debit_Credit>()">
+                                    <option>
+
+                                    </option>
+                                </select>
+                                <span asp-validation-for="DebitCredit" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                       
+
+                    </div>
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="AccountType" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <select asp-for="AccountType" class="form-control" asp-items="Html.GetEnumSelectList<EnumItems.Account_Type>()">
+                                    <option>
+                                    </option>
+                                </select>
+                                <span asp-validation-for="AccountType" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="row pb-3">
+
+                            <div class="col-3"><label asp-for="Balance" class="control-label "></label></div>
+
+                            <div class="col-8">
+                                <input id="txtVatRegNo" asp-for="Balance" type="text" class="form-control form-control-user" readonly="readonly">
+                                <span asp-validation-for="Balance" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3"><label asp-for="DirectPosting" class="control-label "></label></div>
+
+                            <div class="col-8">
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" asp-for="DirectPosting" type="checkbox" id="directposting">
+                                    <label class="form-check-label" for="directposting"></label>
+                                </div>
+                                <span asp-validation-for="DirectPosting" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3"><label asp-for="Blocked" class="control-label "></label></div>
+
+                            <div class="col-8">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" asp-for="Blocked" type="checkbox" id="blocked">
+                                    <label class="form-check-label" for="blocked"></label>
+                                </div>
+                                <span asp-validation-for="Blocked" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <a class="nav-link collapsed pt-0 pl-0 ml-0" href="#" data-toggle="collapse" data-target="#dvPosting"
+                   aria-expanded="true" aria-controls="dvPosting">
+                    <i class="fas fa-fw"></i>
+                    <span>Posting</span>
+                </a>
+
+                <div id="dvPosting" class="row">
+
+                    <div class="col">
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="GeneralPostingType" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+
+                                <select asp-for="GeneralPostingType" class="form-control" asp-items="Html.GetEnumSelectList<EnumItems.General_Posting_Type>()">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="GeneralPostingType" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="GeneralBusinessPostingGroup" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="GeneralBusinessPostingGroup" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="GeneralBusinessPostingGroup" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="GeneralProductPostingGroup" class="control-label"></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="GeneralProductPostingGroup" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="GeneralProductPostingGroup" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col">
+
+
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="VatBusinessPostingGroup" class="control-label "></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="VatBusinessPostingGroup" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="VatBusinessPostingGroup" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3">
+
+                            <div class="col-3 justify-content-end"><label asp-for="VatProductPostingGroup" class="control-label "></label></div>
+
+                            <div class="col-8 justify-content-start">
+                                <input id="txtlegalname" asp-for="VatProductPostingGroup" type="text" class="form-control form-control-user">
+                                <span asp-validation-for="VatProductPostingGroup" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnAddNewLedger" type="submit" class="btn btn-primary">Add Ledger Account</button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

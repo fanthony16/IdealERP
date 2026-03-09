@@ -18,5 +18,7 @@ namespace WebAPI.Model.Services.Interface
 
         public Task<List<Companys.Company>> GetOrgCompanysAsync(string id);
 
+        public Task<bool> SwitchCompany(string orgid, string coyId);
+
     }
 }

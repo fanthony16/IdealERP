@@ -197,6 +197,30 @@ namespace WebAPI.Model.Services.Implementation
 
         }
 
+        public async Task<bool> SwitchCompany(string orgid, string coyId)
+        {
+            var dbCoy = await dbContext.TblCompanies.Where(c => c.OrganisationId.ToString() == orgid).ToListAsync();
+
+            foreach(var coy in dbCoy)
+            {
+                coy.IsDefault = false;
+            }
+
+            dbContext.UpdateRange(dbCoy);
+            await dbContext.SaveChangesAsync();
+
+            var _coy = await dbContext.TblCompanies.Where(c => c.OrganisationId.ToString() == orgid && c.Id.ToString() == coyId).FirstOrDefaultAsync();
+
+            _coy.IsDefault = true;
+
+
+            dbContext.Update(_coy);
+            await dbContext.SaveChangesAsync();
+
+            return true;
+
+        }
+
         public async Task<Companys.Company> UpdateCompanyAsync(Companys.UpdateCompany company)
         {
             var dbCompany = await dbContext.TblCompanies.Where(c => c.Id == company.CompanyID).FirstOrDefaultAsync();
@@ -293,7 +317,8 @@ namespace WebAPI.Model.Services.Implementation
                 ShipToPostCode = dbCoy.ShipToPostCode,
                 SwiftCode = dbCoy.SwiftCode,
                 VatRegNo = dbCoy.VatRegNo,
-                Website = dbCoy.Website
+                Website = dbCoy.Website,
+                isDefault = dbCoy.IsDefault
                 
             };
 

@@ -49,6 +49,7 @@ namespace WebAPI
             services.AddScoped<IUser, Usersvr>();
             services.AddScoped<IOrganisationsvr, Organisationsvr>();
             services.AddScoped<ICompany, Companysvr>();
+            services.AddScoped<IAccountChart, AccountChart>();
             services.AddScoped<ValidationErrors>();
             services.AddScoped<APIError>();
             

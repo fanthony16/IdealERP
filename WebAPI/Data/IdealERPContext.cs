@@ -19,6 +19,7 @@ namespace WebAPI.Data
 
         public virtual DbSet<TblApplicationRegistration> TblApplicationRegistrations { get; set; }
         public virtual DbSet<TblAuditLog> TblAuditLogs { get; set; }
+        public virtual DbSet<TblChartOfAccount> TblChartOfAccounts { get; set; }
         public virtual DbSet<TblCompany> TblCompanies { get; set; }
         public virtual DbSet<TblCountry> TblCountries { get; set; }
         public virtual DbSet<TblCurrency> TblCurrencies { get; set; }
@@ -114,6 +115,96 @@ namespace WebAPI.Data
                     .HasConstraintName("FK_tblAudit_Log_tblOrganisation");
             });
 
+            modelBuilder.Entity<TblChartOfAccount>(entity =>
+            {
+                entity.HasKey(e => e.No);
+
+                entity.ToTable("tblChartOfAccount");
+
+                entity.Property(e => e.No)
+                    .ValueGeneratedNever()
+                    .HasColumnName("no");
+
+                entity.Property(e => e.AccountCategory)
+                    .HasColumnName("account_category")
+                    .HasComment("1 = Asset , 2 = Liabilities, 3 = Equity, 4 = Income, 5 = Cost of Goods Sold, 6 = Expence");
+
+                entity.Property(e => e.AccountSubCategory)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("account_sub_category");
+
+                entity.Property(e => e.AccountType)
+                    .HasColumnName("account_type")
+                    .HasComment("1 = Posting, 2 = Heading, 3 = Total, 4 = Begin_Total, 5 = End_Total");
+
+                entity.Property(e => e.Balance)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("balance");
+
+                entity.Property(e => e.Blocked).HasColumnName("blocked");
+
+                entity.Property(e => e.CompanyId).HasColumnName("company_id");
+
+                entity.Property(e => e.DebitCredit)
+                    .HasColumnName("debit_credit")
+                    .HasComment("1 = Both, 2 = Debit, 3 = Credit");
+
+                entity.Property(e => e.DirectPosting).HasColumnName("direct_posting");
+
+                entity.Property(e => e.GenBusPostingGroup)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("gen_bus_posting_group");
+
+                entity.Property(e => e.GenPostingType)
+                    .HasColumnName("gen_posting_type")
+                    .HasComment("1 = Purchase, 2 = Sale, 3 = Settlement");
+
+                entity.Property(e => e.GenProdPostingGroup)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("gen_prod_posting_group");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("(newsequentialid())");
+
+                entity.Property(e => e.IncomeBalance)
+                    .HasColumnName("income_balance")
+                    .HasComment("1 = Income Statement, 2 = Balance Sheet");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.OrganisationId).HasColumnName("organisation_id");
+
+                entity.Property(e => e.VatPostingGroup)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("vat_posting_group");
+
+                entity.Property(e => e.VatProdPostingGroup)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("vat_prod_posting_group");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.TblChartOfAccounts)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblChartOfAccount_tblCompany");
+
+                entity.HasOne(d => d.Organisation)
+                    .WithMany(p => p.TblChartOfAccounts)
+                    .HasForeignKey(d => d.OrganisationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblChartOfAccount_tblOrganisations");
+            });
+
             modelBuilder.Entity<TblCompany>(entity =>
             {
                 entity.ToTable("tblCompany");
@@ -198,6 +289,8 @@ namespace WebAPI.Data
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("iban");
+
+                entity.Property(e => e.IsDefault).HasColumnName("is_default");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

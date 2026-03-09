@@ -41,6 +41,9 @@ namespace WebAPI.Controllers
 
         }
 
+
+
+
         [HttpGet("Find")]
         public async Task<IActionResult> GetCompany(string id, string coyid)
         {
@@ -56,6 +59,24 @@ namespace WebAPI.Controllers
             return BadRequest("Organisation ID and Company ID is Required");
 
         }
+
+        [HttpGet("Switch/{id}/{coyid}")]
+        public async Task<IActionResult> SwitchCompany(string id, string coyid)
+        {
+
+            if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(coyid))
+            {
+
+                var result = await companyService.SwitchCompany(id, coyid);
+                return Ok(result);
+
+            }
+
+            return BadRequest("Organisation ID and Company ID is Required");
+
+        }
+
+
 
         [HttpPost("New")]
         public async Task<IActionResult> Create([FromBody] Companys.CreateCompany dto)

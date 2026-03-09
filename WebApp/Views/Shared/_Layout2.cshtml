@@ -62,17 +62,15 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-              
-             
+
+
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-         
+
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -96,7 +94,58 @@
                 </div>
             </li>
 
-           
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#financePages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Finance Management</span>
+                </a>
+                <div id="financePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">General Setup</h6>
+
+
+
+                        <a class="collapse-item" asp-controller="Company" asp-action="Index">VAT Bus. Posting Groups</a>
+
+                        <a class="collapse-item" asp-controller="Company" asp-action="Index">VAT Prod. Posting Groups</a>
+
+                        <a class="collapse-item" asp-controller="Company" asp-action="Index">Gen. Bus. Posting Groups</a>
+
+                        <a class="collapse-item" asp-controller="Company" asp-action="Index">Gen. Prod. Posting Groups</a>
+
+                        <div class="collapse-divider"><hr /></div>
+
+                        <h6 class="collapse-header">Other Pages:</h6>
+
+
+                        <a class="collapse-item" asp-controller="AccountChart" asp-action="Create">Chart Of Account</a>
+
+
+                    </div>
+                </div>
+
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loanPages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Loan Application</span>
+                </a>
+
+                <div id="loanPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">General Loan Setup</h6>
+
+
+                        <a class="collapse-item" asp-controller="Company" asp-action="Index">New Application</a>
+
+                        
+                    </div>
+                </div>
+
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -131,8 +180,11 @@
 
 
                     @{
+
                         byte[] pageTitle;
+                        byte[] activeComapny;
                         bool isTitleSet = Context.Session.TryGetValue("page_title", out pageTitle);
+                        bool isCompanySet = Context.Session.TryGetValue("active_company", out activeComapny);
 
                     }
 
@@ -140,8 +192,14 @@
                     {
 
                         <div>
-                            <h5>@Encoding.ASCII.GetString(pageTitle)</h5>
+
+                            <div class="h6 text-black-50 font-weight-bolder fo text-uppercase mb-1 text-capitalize text-dark fw-bold">
+                                <span class="text-muted text-xs">@Encoding.ASCII.GetString(activeComapny)</span>
+                                <br /> @Encoding.ASCII.GetString(pageTitle)
+                            </div>
+
                         </div>
+
                     }
                     else
                     {
@@ -351,6 +409,12 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
+
+                                <a class="dropdown-item btn btn-primary" asp-controller="Company" asp-action="Index">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Change Company
+                                </a>
+
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile

@@ -18,5 +18,7 @@ namespace WebApp.Data.Services.Interface
 
         Task<bool> UpdateCompany(View_Companys.UpdateCompany company);
 
+        Task<bool> SwitchCompany(string orgid, string coyId);
+
     }
 }

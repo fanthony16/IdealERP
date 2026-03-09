@@ -32,9 +32,11 @@ namespace WebApp
             services.AddScoped<FileUploadProcessor>();
             services.AddScoped<ISessionManager, SessionManager>();
             services.AddScoped<IAccountsvr, Accountsvr>();
+            services.AddScoped<IChartOfAccount, ChartOfAccountsvr>();
             services.AddScoped<IMasterData, MasterData>();
             services.AddScoped<IOrganisationsvr, Organisationsvr>();
             services.AddScoped<ICompanys, Companysvr>();
+            
 
             services.AddSession(options =>
             {

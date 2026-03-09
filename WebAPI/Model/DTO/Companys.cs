@@ -50,6 +50,7 @@ namespace WebAPI.Model.DTO
             public string ShipToCountry { get; set; }
             public string ShipToContact { get; set; }
             public string ShipToLocation { get; set; }
+            public bool isDefault { get; set; }
 
         }
 
