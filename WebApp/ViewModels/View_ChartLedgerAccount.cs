@@ -21,7 +21,7 @@ namespace WebApp.ViewModels
             public string Name { get; set; }
             [Required]
             [Display(Name = "Income/Balance")]
-            public int IncomeBalance { get; set; }
+            public string IncomeBalance { get; set; }
             
             [Display(Name = "Account Category")]
             public int AccountCategory { get; set; }
@@ -32,8 +32,8 @@ namespace WebApp.ViewModels
             public int DebitCredit { get; set; }
             [Required]
             [Display(Name = "Account Type")]
-            public int AccountType { get; set; }
-            public decimal? Balance { get; set; }
+            public string AccountType { get; set; }
+            public decimal? Balance { get; set; } = 0;
             [Required]
             [Display(Name = "Direct Posting")]
             public bool DirectPosting { get; set; }
@@ -67,6 +67,7 @@ namespace WebApp.ViewModels
 
         public class LedgerAccount : CreateLedgerAccount
         {
+            [Required]
             public Guid LedgerID { get; set; }
 
         }

@@ -128,6 +128,7 @@ namespace WebApp.Controllers
             if (!string.IsNullOrEmpty(id))
             {
                 _sessionManager.SaveSessionObject(id, "companyid");
+                
 
                 var company = await _companys.SwitchCompany(_sessionManager.GetSessionObject("organisationid"), id);
 

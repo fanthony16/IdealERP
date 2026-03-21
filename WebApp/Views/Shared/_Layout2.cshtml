@@ -120,7 +120,7 @@
                         <h6 class="collapse-header">Other Pages:</h6>
 
 
-                        <a class="collapse-item" asp-controller="AccountChart" asp-action="Create">Chart Of Account</a>
+                        <a class="collapse-item" asp-controller="AccountChart" asp-action="Index">Chart Of Account</a>
 
 
                     </div>
@@ -194,7 +194,7 @@
                         <div>
 
                             <div class="h6 text-black-50 font-weight-bolder fo text-uppercase mb-1 text-capitalize text-dark fw-bold">
-                                <span class="text-muted text-xs">@Encoding.ASCII.GetString(activeComapny)</span>
+                                <span class="text-muted text-xs">Active Company: @Encoding.ASCII.GetString(activeComapny)</span>
                                 <br /> @Encoding.ASCII.GetString(pageTitle)
                             </div>
 

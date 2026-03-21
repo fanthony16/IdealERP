@@ -9,6 +9,8 @@ using WebAPI.Model.Services.Interface;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AccountChartController : Controller
     {
         private readonly APIError apiError;
@@ -21,7 +23,7 @@ namespace WebAPI.Controllers
             this.valErrors = valErrors;
             this._accountChart = _accountChart;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -42,6 +44,21 @@ namespace WebAPI.Controllers
 
         }
 
+        [HttpPost("accounts/Edit")]
+        public async Task<IActionResult> Update([FromBody] ChartLedgerAccount.LedgerAccount dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                apiError.Detail = valErrors.getValidationErrors(ModelState);
+                apiError.ErrorCode = "Ledger_Update";
+                return BadRequest(apiError);
+            }
+
+            var nwledgeraccount = await _accountChart.UpdateAsync(dto);
+            return Ok(nwledgeraccount);
+
+        }
+
         [HttpGet("accounts/{orgid}/{coyid}")]
         public async Task<IActionResult> GetAccountLedgers(string orgid, string coyid )
         {
@@ -55,6 +72,22 @@ namespace WebAPI.Controllers
             }
 
             return BadRequest("Organisation ID and Company ID is Required");
+
+        }
+
+        [HttpGet("accounts/{orgid}/{coyid}/{ledgerid}")]
+        public async Task<IActionResult> GetAccountLedger(string orgid, string coyid, string ledgerid)
+        {
+
+            if (!string.IsNullOrEmpty(orgid) && !string.IsNullOrEmpty(coyid) && !string.IsNullOrEmpty(ledgerid))
+            {
+
+                var ledgeraccount = await _accountChart.GetLedgerAccountsAsync(orgid, coyid, ledgerid);
+                return Ok(ledgeraccount);
+
+            }
+
+            return BadRequest("Organisation ID, Company ID and Account No is Required");
 
         }
 

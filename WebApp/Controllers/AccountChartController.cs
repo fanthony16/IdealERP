@@ -21,9 +21,46 @@ namespace WebApp.Controllers
             this._ledgeraccount = _ledgeraccount;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+
+
+            var ledgeraacount = await _ledgeraccount.GetLedgerAccountsAsync(_sessionManager.GetSessionObject("organisationid"), _sessionManager.GetSessionObject("companyid"));
+            _sessionManager.SaveSessionObject("Chart Of Accounts", "page_title");
+
+            return View(ledgeraacount);
+        }
+
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+
+            var ledgeraacount = await _ledgeraccount.GetLedgerAccountAsync(_sessionManager.GetSessionObject("organisationid"), _sessionManager.GetSessionObject("companyid"),id.ToString());
+
+            _sessionManager.SaveSessionObject("Chart Of Accounts", "page_title");
+
+            return View(ledgeraacount);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(View_ChartLedgerAccount.LedgerAccount nwledgerAccount)
+        {
+
+            if (ModelState.IsValid)
+            {
+                
+                nwledgerAccount.OrganisationID = Guid.Parse(_sessionManager.GetSessionObject("organisationid"));
+                nwledgerAccount.CompanyID = Guid.Parse(_sessionManager.GetSessionObject("companyid"));
+
+                var leageraccount = await _ledgeraccount.UpdateLeagerAccountAsync(nwledgerAccount);
+
+                return RedirectToAction("Index");
+
+            }
+
+            return View(nwledgerAccount);
+
         }
 
 
@@ -40,12 +77,14 @@ namespace WebApp.Controllers
             {
 
                 nwledgerAccount.OrganisationID = Guid.Parse(_sessionManager.GetSessionObject("organisationid"));
+                nwledgerAccount.CompanyID = Guid.Parse(_sessionManager.GetSessionObject("companyid"));
+                nwledgerAccount.Balance = 0;
                 var status =  await _ledgeraccount.CreateLeagerAccountAsync(nwledgerAccount);
 
             }
             else
             {
-                return View(ModelState);
+                return View(nwledgerAccount);
             }
 
             return RedirectToAction("Index");

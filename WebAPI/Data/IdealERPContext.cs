@@ -38,7 +38,7 @@ namespace WebAPI.Data
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("****");
+//                optionsBuilder.UseSqlServer("Data Source=DML01;Initial Catalog=IdealERP;User ID=sa;Password=staiwo16;Connect Timeout=30");
             }
         }
 
@@ -117,13 +117,13 @@ namespace WebAPI.Data
 
             modelBuilder.Entity<TblChartOfAccount>(entity =>
             {
-                entity.HasKey(e => e.No);
+                entity.HasKey(e => new { e.CompanyId, e.No });
 
                 entity.ToTable("tblChartOfAccount");
 
-                entity.Property(e => e.No)
-                    .ValueGeneratedNever()
-                    .HasColumnName("no");
+                entity.Property(e => e.CompanyId).HasColumnName("company_id");
+
+                entity.Property(e => e.No).HasColumnName("no");
 
                 entity.Property(e => e.AccountCategory)
                     .HasColumnName("account_category")
@@ -140,11 +140,10 @@ namespace WebAPI.Data
 
                 entity.Property(e => e.Balance)
                     .HasColumnType("decimal(18, 2)")
-                    .HasColumnName("balance");
+                    .HasColumnName("balance")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Blocked).HasColumnName("blocked");
-
-                entity.Property(e => e.CompanyId).HasColumnName("company_id");
 
                 entity.Property(e => e.DebitCredit)
                     .HasColumnName("debit_credit")

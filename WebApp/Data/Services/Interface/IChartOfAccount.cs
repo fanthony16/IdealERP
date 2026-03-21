@@ -10,10 +10,10 @@ namespace WebApp.Data.Services.Interface
     {
         public Task<bool> CreateLeagerAccountAsync(View_ChartLedgerAccount.CreateLedgerAccount nwledgerAccount);
 
-        public Task<bool> UpdateLeagerAccountAsync(View_ChartLedgerAccount.UpdateLedgerAccount ledgerAccount);
+        public Task<bool> UpdateLeagerAccountAsync(View_ChartLedgerAccount.LedgerAccount ledgerAccount);
 
-        public Task<List<View_ChartLedgerAccount.CreateLedgerAccount>> GetLeagerAccountsAsync(string organisationID);
+        public Task<List<View_ChartLedgerAccount.LedgerAccount>> GetLedgerAccountsAsync(string organisationID, string companyID);
 
-        public Task<View_ChartLedgerAccount.CreateLedgerAccount> GetLeagerAccountAsync(string organisationID,string companyID);
+        public Task<View_ChartLedgerAccount.LedgerAccount> GetLedgerAccountAsync(string organisationID,string companyID, string ledgerid);
     }
 }

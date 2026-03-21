@@ -50,7 +50,7 @@ namespace WebApp.Controllers
 
 
                 var lstCompanys = await _companys.GetCompanysAsync(validAccount.OrganisationID.ToString());
-                var defaultcompany = lstCompanys.Where(c => c.isDefault = true).FirstOrDefault().Name.ToString();
+                var defaultcompany = lstCompanys.Where(c => c.isDefault = true).FirstOrDefault();
 
                 if (validAccount != null && validAccount.Email.ToString() != "")
                 {
@@ -61,7 +61,10 @@ namespace WebApp.Controllers
                         ["page_title"] = "Dashboard",
                         ["userid"] = validAccount.UserID.ToString(),
                         ["organisationid"] = validAccount.OrganisationID.ToString(),
-                        ["active_company"] = defaultcompany.ToString()
+                        ["active_company"] = defaultcompany.Name.ToString(),
+                        ["companyid"] = defaultcompany.CompanyID.ToString(),
+
+                        
 
                     };
 

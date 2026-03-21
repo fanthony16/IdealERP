@@ -25,7 +25,7 @@ namespace WebAPI.Model.Services.Implementation
                 No = dto.AccountNo,
                 AccountCategory = dto.AccountCategory,
                 AccountSubCategory = dto.AccountSubCategory,
-                AccountType = dto.AccountType,
+                AccountType = Convert.ToInt32(dto.AccountType),
                 Balance = dto.Balance,
                 Blocked = dto.Blocked,
                 DebitCredit = dto.DebitCredit,
@@ -33,7 +33,7 @@ namespace WebAPI.Model.Services.Implementation
                 GenBusPostingGroup = dto.GeneralBusinessPostingGroup,
                 GenPostingType = dto.GeneralPostingType,
                 GenProdPostingGroup = dto.GeneralProductPostingGroup,
-                IncomeBalance = dto.IncomeBalance,
+                IncomeBalance = Convert.ToInt32(dto.IncomeBalance),
                 VatPostingGroup = dto.VatPostingGroup,
                 VatProdPostingGroup = dto.VatProductPostingGroup,
                 Name = dto.Name,
@@ -66,7 +66,7 @@ namespace WebAPI.Model.Services.Implementation
                 AccountCategory = coa.AccountCategory,
                 AccountNo = coa.No,
                 Name = coa.Name,
-                AccountType = coa.AccountType,
+                AccountType = coa.AccountType.ToString(),
                 Balance = coa.Balance,
                 Blocked = coa.Blocked,
                 DebitCredit = coa.DebitCredit,
@@ -74,18 +74,19 @@ namespace WebAPI.Model.Services.Implementation
                 GeneralBusinessPostingGroup = coa.GenBusPostingGroup,
                 GeneralPostingType = coa.GenPostingType,
                 GeneralProductPostingGroup =coa.GenProdPostingGroup,
-                IncomeBalance = coa.IncomeBalance,
+                IncomeBalance = coa.IncomeBalance.ToString(),
                 AccountSubCategory = coa.AccountSubCategory,
                 VatPostingGroup = coa.VatPostingGroup,
-                VatProductPostingGroup = coa.VatProdPostingGroup
+                VatProductPostingGroup = coa.VatProdPostingGroup,
+                LedgerID = coa.Id
 
             };
             return ledgeraccountObj;
         }
 
-        public async Task<ChartLedgerAccount.LedgerAccount> UpdateAsync(ChartLedgerAccount.UpdateLedgerAccount dto)
+        public async Task<ChartLedgerAccount.LedgerAccount> UpdateAsync(ChartLedgerAccount.LedgerAccount dto)
         {
-            var dbledgerAccount = await dbContext.TblChartOfAccounts.Where(x => x.OrganisationId.ToString() == dto.OrganisationID.ToString() && x.CompanyId.ToString() == dto.CompanyID.ToString() && x.No == dto.AccountNo).FirstOrDefaultAsync();
+            var dbledgerAccount = await dbContext.TblChartOfAccounts.Where(x => x.OrganisationId.ToString() == dto.OrganisationID.ToString() && x.CompanyId.ToString() == dto.CompanyID.ToString() && x.Id.ToString() == dto.LedgerID.ToString()).FirstOrDefaultAsync();
 
             if (dbledgerAccount != null)
             {
@@ -96,12 +97,12 @@ namespace WebAPI.Model.Services.Implementation
                 dbledgerAccount.VatProdPostingGroup = dto.VatProductPostingGroup;
                 dbledgerAccount.AccountCategory = dto.AccountCategory;
                 dbledgerAccount.AccountSubCategory = dto.AccountSubCategory;
-                dbledgerAccount.AccountType = dto.AccountType;
+                dbledgerAccount.AccountType = Convert.ToInt32(dto.AccountType);
                 dbledgerAccount.Balance = dto.Balance;
                 dbledgerAccount.Blocked = dto.Blocked;
                 dbledgerAccount.DebitCredit = dto.DebitCredit;
                 dbledgerAccount.DirectPosting = dto.DirectPosting;
-                dbledgerAccount.IncomeBalance = dto.IncomeBalance;
+                dbledgerAccount.IncomeBalance = Convert.ToInt32(dto.IncomeBalance);
 
                 dbContext.Update(dbledgerAccount);
                 await dbContext.SaveChangesAsync();
@@ -118,5 +119,14 @@ namespace WebAPI.Model.Services.Implementation
 
         }
 
+        public async Task<ChartLedgerAccount.LedgerAccount> GetLedgerAccountsAsync(string orgid, string coyid, string ledgerid)
+        {
+            var dbledgerAccount = await dbContext.TblChartOfAccounts.Where(x => x.OrganisationId.ToString() == orgid && x.CompanyId.ToString() == coyid && x.Id.ToString() == ledgerid.ToString()).FirstOrDefaultAsync();
+
+            return MapToObj(dbledgerAccount);
+
+            
+
+        }
     }
 }

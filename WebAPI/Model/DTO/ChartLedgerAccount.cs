@@ -20,14 +20,14 @@ namespace WebAPI.Model.DTO
             [Required]
             public string Name { get; set; }
             [Required]
-            public int IncomeBalance { get; set; }
+            public string IncomeBalance { get; set; }
             [Required]
             public int? AccountCategory { get; set; }
             public string AccountSubCategory { get; set; }
             [Required]
             public int DebitCredit { get; set; }
             [Required]
-            public int AccountType { get; set; }
+            public string AccountType { get; set; }
             public decimal? Balance { get; set; }
             [Required]
             public bool DirectPosting { get; set; }
