@@ -107,13 +107,13 @@
 
 
 
-                        <a class="collapse-item" asp-controller="Company" asp-action="Index">VAT Bus. Posting Groups</a>
+                        <a class="collapse-item" asp-controller="VATPostingGroup" asp-action="BusinessVatPostingGroups">VAT Bus. Posting Groups</a>
 
-                        <a class="collapse-item" asp-controller="Company" asp-action="Index">VAT Prod. Posting Groups</a>
+                        <a class="collapse-item" asp-controller="VATPostingGroup" asp-action="ProductVatPostingGroups">VAT Prod. Posting Groups</a>
 
-                        <a class="collapse-item" asp-controller="Company" asp-action="Index">Gen. Bus. Posting Groups</a>
+                        <a class="collapse-item" asp-controller="GenPostingGroup" asp-action="GenBusinessPostingGroups">Gen. Bus. Posting Groups</a>
 
-                        <a class="collapse-item" asp-controller="Company" asp-action="Index">Gen. Prod. Posting Groups</a>
+                        <a class="collapse-item" asp-controller="GenPostingGroup" asp-action="GenProductPostingGroups">Gen. Prod. Posting Groups</a>
 
                         <div class="collapse-divider"><hr /></div>
 
@@ -140,7 +140,7 @@
 
                         <a class="collapse-item" asp-controller="Company" asp-action="Index">New Application</a>
 
-                        
+
                     </div>
                 </div>
 
@@ -212,14 +212,14 @@
 
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         @*<div class="input-group">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                       aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
-                </div>
-            </div>*@
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>*@
                     </form>
 
                     <!-- Topbar Navbar -->
@@ -233,20 +233,20 @@
                             </a>
                             <!-- Dropdown - Messages -->
                             @*<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                     aria-labelledby="searchDropdown">
-                    <form class="form-inline mr-auto w-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                   placeholder="Search for..." aria-label="Search"
-                                   aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>*@
+                                     aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small"
+                                                   placeholder="Search for..." aria-label="Search"
+                                                   aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>*@
                         </li>
 
                         <!-- Nav Item - Alerts -->
@@ -506,6 +506,7 @@
     <script src="~/js/demo/chart-area-demo.js"></script>
     <script src="~/js/demo/chart-pie-demo.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 
 </html>

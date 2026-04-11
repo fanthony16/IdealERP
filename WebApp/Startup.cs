@@ -36,7 +36,11 @@ namespace WebApp
             services.AddScoped<IMasterData, MasterData>();
             services.AddScoped<IOrganisationsvr, Organisationsvr>();
             services.AddScoped<ICompanys, Companysvr>();
-            
+            services.AddScoped<IVATPostingGroups, VATPostingGroupsvr>();
+            services.AddScoped<IGenPostingGroups, GenPostingGroupsvr>();
+
+
+
 
             services.AddSession(options =>
             {

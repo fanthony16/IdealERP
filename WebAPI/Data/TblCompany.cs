@@ -10,6 +10,10 @@ namespace WebAPI.Data
         public TblCompany()
         {
             TblChartOfAccounts = new HashSet<TblChartOfAccount>();
+            TblGenBusinessPostingGroups = new HashSet<TblGenBusinessPostingGroup>();
+            TblGenProductPostingGroups = new HashSet<TblGenProductPostingGroup>();
+            TblVatBusinessPostingGroups = new HashSet<TblVatBusinessPostingGroup>();
+            TblVatProductPostingGroups = new HashSet<TblVatProductPostingGroup>();
         }
 
         public Guid Id { get; set; }
@@ -50,5 +54,9 @@ namespace WebAPI.Data
 
         public virtual TblOrganisation Organisation { get; set; }
         public virtual ICollection<TblChartOfAccount> TblChartOfAccounts { get; set; }
+        public virtual ICollection<TblGenBusinessPostingGroup> TblGenBusinessPostingGroups { get; set; }
+        public virtual ICollection<TblGenProductPostingGroup> TblGenProductPostingGroups { get; set; }
+        public virtual ICollection<TblVatBusinessPostingGroup> TblVatBusinessPostingGroups { get; set; }
+        public virtual ICollection<TblVatProductPostingGroup> TblVatProductPostingGroups { get; set; }
     }
 }

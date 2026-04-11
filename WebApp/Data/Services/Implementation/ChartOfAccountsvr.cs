@@ -114,12 +114,6 @@ namespace WebApp.Data.Services.Implementation
             }
         }
 
-
-
-
-
-
-
         public async Task<bool> UpdateLeagerAccountAsync(View_ChartLedgerAccount.LedgerAccount ledgerAccount)
         {
             var result = await _apigateway.ApiPostAsync<View_ChartLedgerAccount.LedgerAccount>(ledgerAccount, "AccountChart/accounts/Edit");

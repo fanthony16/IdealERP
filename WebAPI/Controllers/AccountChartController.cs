@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountChartController : Controller
+    public class AccountChartController : ControllerBase
     {
         private readonly APIError apiError;
         private readonly ValidationErrors valErrors;
@@ -22,11 +22,6 @@ namespace WebAPI.Controllers
             this.apiError = apiError;
             this.valErrors = valErrors;
             this._accountChart = _accountChart;
-        }
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
         }
 
         [HttpPost("accounts/New")]

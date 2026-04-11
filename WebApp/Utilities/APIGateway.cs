@@ -61,7 +61,6 @@ namespace WebApp.Utilities
 
                 return (error == "") ? response.StatusCode.ToString() : error;
 
-                
                 //Console.WriteLine($"Error details: {error}");
             }
         }

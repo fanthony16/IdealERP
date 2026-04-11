@@ -1,0 +1,250 @@
+﻿@*@model IEnumerable<WebApp.ViewModels.View_VATPostingGroups.VATPostingGroup>*@
+@model WebApp.ViewModels.View_VATPostingGroups.VATPostingGroup
+
+@{
+    ViewData["Title"] = "BusinessVatPostingGroups";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<!-- Add New -->
+<div class="modal fade" id="newModalBusVATGroups" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="saveForm" method="post">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">VAT Business Posting Group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+
+                        <label asp-for="Code" class="control-label"></label>
+                        <input asp-for="Code" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+
+
+                    </div>
+
+                </div>
+
+                @*<div class="modal-body">
+
+                        <div class="form-group">
+
+                            <label id="lblDescription" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+
+                        </div>
+
+                    </div>*@
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Close</button>
+                    <button id="btnAddNew" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit -->
+<div class="modal fade" id="editModalBusVATGroups" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <form id="updateForm" method="post">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">VAT Business Posting Group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <input class="groupId" type="hidden" asp-for="Id" />
+                        <label asp-for="Code" class="control-label"></label>
+                        <input id="VATBusCode" asp-for="Code" class="form-control" />
+                        @*<span asp-validation-for="itemCategory.Code" class="text-danger"></span>*@
+
+                        <label asp-for="Description" class="control-label"></label>
+                        <input id="VATBusDesc" asp-for="Description" class="form-control" />
+
+                    </div>
+                </div>
+
+                <!--<div class="modal-body">
+                    <div class="form-group">-->
+                @*<span asp-validation-for="itemCategory.Description" class="text-danger"></span>*@
+
+                <!--</div>
+                </div>-->
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Close</button>
+                    <button id="btnUpdate" type="button" class="btn btn-primary">Save</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+
+
+    <div class="card shadow w-100">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+
+                            <th>@Html.DisplayNameFor(model => model.Code)</th>
+                            <th>@Html.DisplayNameFor(model => model.Description)</th>
+
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.VATPostingGroups)
+                        {
+
+                            <tr>
+
+                                <td>@Html.DisplayFor(model => item.Code)</td>
+                                <td>@Html.DisplayFor(model => item.Description)</td>
+
+
+                                <td>
+
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Code })*@
+
+                                    <a id="EditForm" class="btn-link" onclick="Editform('@item.Id')">Edit</a> |
+                                    <a id="ShowModal" class="btn-link" onclick="Confirm('@item.Id')">Delete</a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="text-left">
+
+                @*<a asp-controller="AccountChart" asp-action="Create" class="btn btn-primary">Add New Ledger Account</a>*@
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newModalBusVATGroups">Add New</button>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnDelete").click(function () {
+                var idD = $("#ItmCatId").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/ItemCategory/DeleteICat",
+                    data: { id: idD },
+                    success: function (result) {
+                        if (result) {
+                            $("#ItmCatId").val(null);
+                            window.location.href = "/ItemCategory/Index";
+                        } else {
+                            alert("Opps Something Wrong");
+                        }
+                    }
+                })
+            })
+
+
+            $(".btnCancel").click(function () {
+                window.location.href = "/BusVatGroups";
+            })
+
+            $("#btnAddNew").click(function () {
+
+                /*alert("I got here in bus");*/
+
+                var busVATGroupForm = $("#saveForm").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/VATPostingGroup/CreateBusinessVatPostingGroup",
+                    data: busVATGroupForm,
+                    success: function () {
+                        window.location.href = "/BusVatGroups"
+                    }
+                })
+            })
+
+            $("#btnUpdate").click(function () {
+               
+
+                var prodVATForm = $("#updateForm").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/VATPostingGroup/UpdateBusinessVatPostingGroup",
+                    data: prodVATForm,
+                    success: function () {
+                        window.location.href = "/BusVatGroups"
+                    }
+                })
+            })
+
+        })
+
+
+        var Confirm = function (id) {
+
+            $("#ItmCatId").val(id);
+            $("#deleteModalICategory").modal('show');
+
+        }
+        var Editform = function (id) {
+            $.ajax({
+                type: "POST",
+                url: "/VATPostingGroup/GetBusinessVATGroup",
+                data: { id: id },
+                success: function (prodGroup) {
+                    $("#editModalBusVATGroups").modal('show');
+                    $("#VATBusCode").val(prodGroup.code);
+                    $("#VATBusDesc").val(prodGroup.name);
+                    $(".groupId").val(prodGroup.id);
+                }
+            })
+        }
+    </script>
+
+}

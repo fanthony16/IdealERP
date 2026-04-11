@@ -25,6 +25,7 @@ namespace WebAPI.Data
         public string GenProdPostingGroup { get; set; }
         public string VatPostingGroup { get; set; }
         public string VatProdPostingGroup { get; set; }
+        public DateTime? DateCreated { get; set; }
 
         public virtual TblCompany Company { get; set; }
         public virtual TblOrganisation Organisation { get; set; }

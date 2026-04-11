@@ -21,8 +21,13 @@ namespace WebAPI.Data
         public virtual DbSet<TblAuditLog> TblAuditLogs { get; set; }
         public virtual DbSet<TblChartOfAccount> TblChartOfAccounts { get; set; }
         public virtual DbSet<TblCompany> TblCompanies { get; set; }
+        public virtual DbSet<TblContract> TblContracts { get; set; }
         public virtual DbSet<TblCountry> TblCountries { get; set; }
         public virtual DbSet<TblCurrency> TblCurrencies { get; set; }
+        public virtual DbSet<TblDynamicField> TblDynamicFields { get; set; }
+        public virtual DbSet<TblDynamicFieldValue> TblDynamicFieldValues { get; set; }
+        public virtual DbSet<TblGenBusinessPostingGroup> TblGenBusinessPostingGroups { get; set; }
+        public virtual DbSet<TblGenProductPostingGroup> TblGenProductPostingGroups { get; set; }
         public virtual DbSet<TblOrganisation> TblOrganisations { get; set; }
         public virtual DbSet<TblPermission> TblPermissions { get; set; }
         public virtual DbSet<TblPlan> TblPlans { get; set; }
@@ -31,6 +36,8 @@ namespace WebAPI.Data
         public virtual DbSet<TblSubscription> TblSubscriptions { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
         public virtual DbSet<TblUserOrganization> TblUserOrganizations { get; set; }
+        public virtual DbSet<TblVatBusinessPostingGroup> TblVatBusinessPostingGroups { get; set; }
+        public virtual DbSet<TblVatProductPostingGroup> TblVatProductPostingGroups { get; set; }
         public virtual DbSet<VwUser> VwUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -144,6 +151,11 @@ namespace WebAPI.Data
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Blocked).HasColumnName("blocked");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.DebitCredit)
                     .HasColumnName("debit_credit")
@@ -387,6 +399,17 @@ namespace WebAPI.Data
                     .HasConstraintName("FK_tblCompany_tblOrganisations");
             });
 
+            modelBuilder.Entity<TblContract>(entity =>
+            {
+                entity.ToTable("tblContract");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<TblCountry>(entity =>
             {
                 entity.ToTable("tblCountry");
@@ -435,6 +458,130 @@ namespace WebAPI.Data
                 entity.Property(e => e.Id)
                     .ValueGeneratedOnAdd()
                     .HasColumnName("id");
+            });
+
+            modelBuilder.Entity<TblDynamicField>(entity =>
+            {
+                entity.ToTable("tblDynamicField");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.FieldType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Label)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TblDynamicFieldValue>(entity =>
+            {
+                entity.ToTable("tblDynamicFieldValue");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Value)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DynamicField)
+                    .WithMany(p => p.TblDynamicFieldValues)
+                    .HasForeignKey(d => d.DynamicFieldId)
+                    .HasConstraintName("FK_tblDynamicFieldValue_tblDynamicFieldValue");
+
+                entity.HasOne(d => d.Entity)
+                    .WithMany(p => p.TblDynamicFieldValues)
+                    .HasForeignKey(d => d.EntityId)
+                    .HasConstraintName("FK_tblDynamicFieldValue_tblContract");
+            });
+
+            modelBuilder.Entity<TblGenBusinessPostingGroup>(entity =>
+            {
+                entity.ToTable("tblGenBusinessPostingGroups");
+
+                entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
+
+                entity.Property(e => e.Code)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("code");
+
+                entity.Property(e => e.CompanyId).HasColumnName("company_id");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.OrganisationId).HasColumnName("organisation_id");
+
+                entity.Property(e => e.VatId).HasColumnName("vat_id");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.TblGenBusinessPostingGroups)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblGenBusinessPostingGroups_tblCompany");
+
+                entity.HasOne(d => d.Organisation)
+                    .WithMany(p => p.TblGenBusinessPostingGroups)
+                    .HasForeignKey(d => d.OrganisationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblGenBusinessPostingGroups_tblOrganisations");
+            });
+
+            modelBuilder.Entity<TblGenProductPostingGroup>(entity =>
+            {
+                entity.ToTable("tblGenProductPostingGroups");
+
+                entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
+
+                entity.Property(e => e.Code)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("code");
+
+                entity.Property(e => e.CompanyId).HasColumnName("company_id");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.OrganisationId).HasColumnName("organisation_id");
+
+                entity.Property(e => e.VatId).HasColumnName("vat_id");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.TblGenProductPostingGroups)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblGenProductPostingGroups_tblCompany");
+
+                entity.HasOne(d => d.Organisation)
+                    .WithMany(p => p.TblGenProductPostingGroups)
+                    .HasForeignKey(d => d.OrganisationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblGenProductPostingGroups_tblOrganisations");
             });
 
             modelBuilder.Entity<TblOrganisation>(entity =>
@@ -740,6 +887,94 @@ namespace WebAPI.Data
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tblUser_Organization_tblUsers");
+            });
+
+            modelBuilder.Entity<TblVatBusinessPostingGroup>(entity =>
+            {
+                entity.HasKey(e => new { e.CompanyId, e.Code })
+                    .HasName("PK_tblVatBusinessPostingGroups_1");
+
+                entity.ToTable("tblVatBusinessPostingGroups");
+
+                entity.Property(e => e.CompanyId).HasColumnName("company_id");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("code");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("(newsequentialid())");
+
+                entity.Property(e => e.OrganisationId).HasColumnName("organisation_id");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.TblVatBusinessPostingGroups)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblVatBusinessPostingGroups_tblCompany");
+
+                entity.HasOne(d => d.Organisation)
+                    .WithMany(p => p.TblVatBusinessPostingGroups)
+                    .HasForeignKey(d => d.OrganisationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblVatBusinessPostingGroups_tblOrganisations");
+            });
+
+            modelBuilder.Entity<TblVatProductPostingGroup>(entity =>
+            {
+                entity.HasKey(e => new { e.CompanyId, e.Code })
+                    .HasName("PK_tblVatProductPostingGroups_1");
+
+                entity.ToTable("tblVatProductPostingGroups");
+
+                entity.Property(e => e.CompanyId).HasColumnName("company_id");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("code");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("(newsequentialid())");
+
+                entity.Property(e => e.OrganisationId).HasColumnName("organisation_id");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.TblVatProductPostingGroups)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblVatProductPostingGroups_tblCompany");
+
+                entity.HasOne(d => d.Organisation)
+                    .WithMany(p => p.TblVatProductPostingGroups)
+                    .HasForeignKey(d => d.OrganisationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tblVatProductPostingGroups_tblOrganisations");
             });
 
             modelBuilder.Entity<VwUser>(entity =>
